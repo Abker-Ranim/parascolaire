@@ -1,0 +1,80 @@
+<div class="content">
+  <div class="left-side">
+    <div class="auth-bg">
+      <span class="r"></span>
+      <span class="r s"></span>
+      <span class="r s"></span>
+      <span class="r"></span>
+    </div>
+    <div class="main">
+      <input type="checkbox" id="chk" aria-hidden="true" />
+
+      <!-- Partie Signup commentée -->
+      <!-- 
+        <div class="signup">
+          <form #signupForm="ngForm" (ngSubmit)="onSignup()">
+            <label for="chk" aria-hidden="true">Sign up</label>
+  
+            <div class="input-container">
+              <input type="text" name="FirstName" placeholder="First Name" [(ngModel)]="signupObj.FirstName" required />
+              <span class="icon"><i class="ti ti-user-filled"></i></span>
+            </div>
+  
+            <div class="input-container">
+              <input type="text" name="LastName" placeholder="Last Name" [(ngModel)]="signupObj.LastName" required />
+              <span class="icon"><i class="ti ti-user-filled"></i></span>
+            </div>
+  
+            <div class="input-container">
+              <input type="email" name="email" placeholder="Email" [(ngModel)]="signupObj.email" required />
+              <span class="icon"><i class="ti ti-mail-filled"></i></span>
+            </div>
+  
+            <div class="input-container">
+              <input type="password" name="password" placeholder="Password" [(ngModel)]="signupObj.password" required />
+              <span class="icon"><i class="ti ti-lock-square-rounded-filled"></i></span>
+            </div>
+  
+            <button type="submit" [disabled]="!signupForm.form.valid">Sign up</button>
+          </form>
+        </div>
+        -->
+
+      <!-- Partie Login -->
+      <div class="login">
+        <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+          <label for="chk" aria-hidden="true">Login</label>
+
+          <div class="input-container">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              [(ngModel)]="loginObj.email"
+              required
+            />
+            <span class="icon"><i class="ti ti-mail-filled"></i></span>
+          </div>
+
+          <div class="input-container">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              [(ngModel)]="loginObj.password"
+              required
+            />
+            <span class="icon"
+              ><i class="ti ti-lock-square-rounded-filled"></i
+            ></span>
+          </div>
+
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="right-side">
+    <img src="assets/parascolaire.jpg" alt="side-img" id="side-img" />
+  </div>
+</div>

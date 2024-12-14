@@ -1,0 +1,11 @@
+.layout {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .content {
+    margin-left: 250px; /* Laissez de l'espace pour la sidebar */
+    padding: 20px;
+    flex: 1;
+  }
+  
