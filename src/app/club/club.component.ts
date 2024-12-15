@@ -1,10 +1,82 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';  // Import de CommonModule
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-club',
+  selector: 'app-clubs',
+  standalone: true,
+  imports: [CommonModule, FormsModule],  // Assurez-vous d'importer CommonModule
   templateUrl: './club.component.html',
-  styleUrl: './club.component.css'
+  styleUrls: ['./club.component.css']
 })
-export class ClubComponent {
+export class ClubComponent implements OnInit{
+  showForm = false;
+  clubCards: any[] = []; // Tableau pour stocker les cartes des clubs
+  newClub = {
+    name: '',
+    email: '',
+    date: '',
+    description: '',
+    imageUrl: ''
+  };
+  selectedClub: any;  // Variable pour stocker les informations du club sélectionné
+
+  constructor(private router: Router, private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    // Charger les cartes depuis le LocalStorage si elles existent
+    const savedCards = localStorage.getItem('clubCards');
+    if (savedCards) {
+      this.clubCards = JSON.parse(savedCards);
+    }
+
+    // Récupérer l'ID du club depuis les paramètres de l'URL (si existe)
+    this.route.params.subscribe(params => {
+      const clubId = params['clubId'];
+      if (clubId) {
+        this.selectedClub = this.clubCards.find(club => club.id === +clubId); // Récupère le club par ID
+      }
+    });
+  }
+
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
+
+  onSubmit() {
+      // Vérifier que tous les champs obligatoires sont remplis
+   if (!this.newClub.name || !this.newClub.email || !this.newClub.date|| !this.newClub.description) {
+    alert('Please fill in all required fields!');
+    return;
+  }
+
+    // Ajout de la nouvelle carte au tableau des cartes de club
+    const newClubWithId = { ...this.newClub, id: Date.now() }; // Utiliser Date.now() pour générer un ID unique
+    this.clubCards.push(newClubWithId);
+
+    // Sauvegarder les cartes dans le LocalStorage
+    localStorage.setItem('clubCards', JSON.stringify(this.clubCards));
+
+    // Réinitialisation du formulaire
+    this.newClub = { name: '', email: '', date: '', description: '', imageUrl: '' };
+    this.showForm = false; // Ferme le formulaire après la soumission
+  }
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.newClub.imageUrl = e.target.result; // Enregistre l'image en base64
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Méthode pour naviguer vers la page de profil d'un club lorsqu'on clique sur une carte
+  navigateToClubProfile(clubId: number) {
+    this.router.navigate(['/Clubs', clubId]); // Navigue vers la route '/default1/:clubId'
+  }
 
 }

@@ -24,10 +24,9 @@ import { ClassroomComponent } from './classroom/classroom.component';
     NavbarComponent,
     SidebarComponent,
     BodyComponent,
-    DashboardComponent,
-    ClubComponent,
+   
+
     StudentComponent,
-    HomeComponent,
     ClassroomComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, RouterModule],

@@ -1,4 +1,3 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -8,20 +7,30 @@ export class AuthService {
   constructor() {}
 
   login(user: { role: string }): void {
-    localStorage.setItem('userRole', user.role);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('userRole', user.role);
+    }
   }
 
   getRole(): string {
-    return localStorage.getItem('userRole') || '';
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem('userRole') || '';
+    }
+    return '';
   }
 
   isAuthenticated(): boolean {
-    // Vérifie si un rôle d'utilisateur existe
-    return !!localStorage.getItem('userRole');
+    // Vérifie si un rôle d'utilisateur existe dans localStorage, seulement côté client
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return !!localStorage.getItem('userRole');
+    }
+    return false; // Retourner false si l'environnement n'est pas un navigateur
   }
 
   logout(): void {
-    localStorage.removeItem('userRole');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('userRole');
+    }
   }
 
   // Nouvelle méthode pour obtenir un rôle et gérer l'authentification
