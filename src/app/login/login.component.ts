@@ -32,6 +32,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
   onLogin() {
-    this.router.navigate(['body']);
+    console.log('Tentative de connexion avec :', this.loginObj);
+
+    if (this.loginObj.email === 'admin@example.com' && this.loginObj.password === 'admin123') {
+      // Simule un admin
+      const user = { role: 'admin' };
+      localStorage.setItem('userRole', user.role);
+      console.log("Utilisateur connecté en tant qu'admin.");
+      this.router.navigate(['/admin/dashboard']); // Redirige vers une route admin
+    } else if (this.loginObj.email === 'student@example.com' && this.loginObj.password === 'student123') {
+      // Simule un étudiant
+      const user = { role: 'student' };
+      localStorage.setItem('userRole', user.role);
+      console.log("Utilisateur connecté en tant qu'étudiant.");
+      this.router.navigate(['/student/dashboard']); // Redirige vers une route étudiant
+    } else {
+      // Erreur si les identifiants sont incorrects
+      console.log('Email ou mot de passe incorrect.');
+      alert('Identifiants invalides. Veuillez réessayer.');
+    }
   }
 }

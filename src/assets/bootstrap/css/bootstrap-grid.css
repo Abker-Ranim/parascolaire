@@ -1165,9 +1165,7 @@
   display: inline-flex !important;
 }
 
-.d-none {
-  display: none !important;
-}
+
 
 .flex-fill {
   flex: 1 1 auto !important;

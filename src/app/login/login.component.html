@@ -42,7 +42,7 @@
 
       <!-- Partie Login -->
       <div class="login">
-        <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+        <form >
           <label for="chk" aria-hidden="true">Login</label>
 
           <div class="input-container">
@@ -69,7 +69,7 @@
             ></span>
           </div>
 
-          <button type="submit">Login</button>
+          <button type="submit" (click)="onLogin()">Login</button>
         </form>
       </div>
     </div>
