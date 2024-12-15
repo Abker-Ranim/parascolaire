@@ -11,6 +11,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { BodyComponent } from './body/body.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ClubComponent } from './club/club.component';
+import { StudentComponent } from './student/student.component';
+import { HomeComponent } from './home/home.component';
+import { ClassroomComponent } from './classroom/classroom.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +24,11 @@ import { BodyComponent } from './body/body.component';
     NavbarComponent,
     SidebarComponent,
     BodyComponent,
+    DashboardComponent,
+    ClubComponent,
+    StudentComponent,
+    HomeComponent,
+    ClassroomComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, RouterModule],
   providers: [provideClientHydration()],

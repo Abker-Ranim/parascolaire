@@ -1,0 +1,15 @@
+.navbar {
+    position: fixed; /* Fixe la navbar en haut */
+    top: 0;
+    left: 0;
+    width: 100%; /* Prend toute la largeur */
+    height: 60px; /* Hauteur de la navbar */
+    background-color: #121e61;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000; /* Toujours au-dessus des autres éléments */
+  }
+  

@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrl: './body.component.css'
 })
 export class BodyComponent {
+  isSidebarCollapsed: boolean = false; // État pour la sidebar
 
+  toggleSidebar(): void {
+    this.isSidebarCollapsed = !this.isSidebarCollapsed; // Inverse l'état
+  }
 }

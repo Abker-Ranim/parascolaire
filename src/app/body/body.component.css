@@ -1,11 +1,23 @@
+/* Pour structurer le layout */
 .layout {
-    display: flex;
-    flex-direction: row;
+    display: flex; /* Flexbox pour disposer sidebar + contenu */
+    height: calc(100vh - 60px); /* Hauteur totale moins la hauteur de la navbar */
+    margin-top: 60px; /* Même hauteur que la navbar */
   }
   
-  .content {
-    margin-left: 250px; /* Laissez de l'espace pour la sidebar */
-    padding: 20px;
-    flex: 1;
+  /* Style de la sidebar */
+  .sidebar {
+    width: 250px; /* Largeur fixe de la sidebar */
+    background-color: #2a2a2a; /* Couleur de fond de la sidebar */
+    color: #fff;
+    height: 100%; /* Prend toute la hauteur disponible */
+    overflow-y: auto; /* Permet le défilement si nécessaire */
+  }
+  
+  /* Style du contenu principal */
+  .body {
+    flex-grow: 1; /* Prend tout l'espace disponible à droite de la sidebar */
+    padding: 20px; /* Ajout de marges internes */
+    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
   }
   
