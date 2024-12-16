@@ -14,7 +14,7 @@ export class AuthService {
 
   getRole(): string {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('userRole') || '';
+      return localStorage.getItem('userRole') || '';  
     }
     return '';
   }

@@ -76,7 +76,9 @@ export class ClubComponent implements OnInit{
 
   // Méthode pour naviguer vers la page de profil d'un club lorsqu'on clique sur une carte
   navigateToClubProfile(clubId: number) {
-    this.router.navigate(['/Clubs', clubId]); // Navigue vers la route '/default1/:clubId'
+    console.log(`Navigating to /club/${clubId}`);
+
+    this.router.navigate(['club', clubId]); 
   }
 
 }

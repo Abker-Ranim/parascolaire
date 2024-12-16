@@ -1,0 +1,20 @@
+.btn-add-new-club {
+    background-color: #e1D8F1;
+    color: #673AB7;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 20px auto;
+    float: right;
+  
+  }
+  
+  .btn-add-new-club:hover {
+    background-color: #d2b8e3;
+  }

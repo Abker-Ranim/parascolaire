@@ -2,41 +2,20 @@
 <aside id="sidebar" class="sidebar">
   <br />
   <ul class="sidebar-nav" id="sidebar-nav">
+    <!-- Liens visibles pour tous les rôles -->
     <li class="nav-item">
       <a class="nav-link collapsed" routerLink="home" routerLinkActive="active">
         <i class="bi bi-grid"></i>
         <span>Home</span>
       </a>
     </li>
-    <!-- End Dashboard Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" routerLink="club" routerLinkActive="active">
         <i class="bi bi-menu-button-wide"></i><span>Clubs</span>
       </a>
     </li>
-    <!-- End Components Nav -->
 
-    <li class="nav-item">
-      <a
-        class="nav-link collapsed"
-        routerLink="student"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-journal-text"></i><span>Students</span>
-      </a>
-    </li>
-    <!-- End Tables Nav -->
-
-    <li class="nav-item">
-      <a
-        class="nav-link collapsed"
-        routerLink="classroom"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-journal-text"></i><span>Classroom</span>
-      </a>
-    </li>
     <li class="nav-item">
       <a
         class="nav-link collapsed"
@@ -46,7 +25,38 @@
         <i class="bi bi-bar-chart"></i><span>Dashboard</span>
       </a>
     </li>
-    <!-- End Charts Nav -->
+
+    <!-- Lien "Request Event" visible uniquement pour Admin et Club -->
+    <li class="nav-item" *ngIf="userRole === 'admin' || userRole === 'club'">
+      <a
+        class="nav-link collapsed"
+        routerLink="RequestEvent"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-bar-chart"></i><span>Request an Event</span>
+      </a>
+    </li>
+
+    <!-- Liens visibles uniquement pour Admin -->
+    <li class="nav-item" *ngIf="userRole === 'admin'">
+      <a
+        class="nav-link collapsed"
+        routerLink="student"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-journal-text"></i><span>Students</span>
+      </a>
+    </li>
+
+    <li class="nav-item" *ngIf="userRole === 'admin'">
+      <a
+        class="nav-link collapsed"
+        routerLink="classroom"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-journal-text"></i><span>Classroom</span>
+      </a>
+    </li>
   </ul>
 </aside>
-<!-- End Sidebar-->
+<!-- End Sidebar -->

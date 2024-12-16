@@ -34,18 +34,42 @@ export class LoginComponent implements OnInit {
   onLogin() {
     console.log('Tentative de connexion avec :', this.loginObj);
 
-    if (this.loginObj.email === 'admin@example.com' && this.loginObj.password === 'admin123') {
+    if (
+      this.loginObj.email === 'admin@example.com' &&
+      this.loginObj.password === 'admin123'
+    ) {
       // Simule un admin
       const user = { role: 'admin' };
       localStorage.setItem('userRole', user.role);
       console.log("Utilisateur connecté en tant qu'admin.");
       this.router.navigate(['/admin/dashboard']); // Redirige vers une route admin
-    } else if (this.loginObj.email === 'student@example.com' && this.loginObj.password === 'student123') {
-      // Simule un étudiant
+    } else if (
+      this.loginObj.email === 'club@example.com' &&
+      this.loginObj.password === 'club123'
+    ) {
+      // Simule un club
+      const user = { role: 'club' };
+      localStorage.setItem('userRole', user.role);
+      console.log('Utilisateur connecté en tant que club.');
+      this.router.navigate(['/club/dashboard']); // Redirige vers une route étudiant
+    } else if (
+      this.loginObj.email === 'student@example.com' &&
+      this.loginObj.password === 'student123'
+    ) {
+      // Simule un etudiant
       const user = { role: 'student' };
       localStorage.setItem('userRole', user.role);
-      console.log("Utilisateur connecté en tant qu'étudiant.");
+      console.log('Utilisateur connecté en tant que student.');
       this.router.navigate(['/student/dashboard']); // Redirige vers une route étudiant
+    } else if (
+      this.loginObj.email === 'membre@example.com' &&
+      this.loginObj.password === 'membre123'
+    ) {
+      // Simule un membre
+      const user = { role: 'membre' };
+      localStorage.setItem('userRole', user.role);
+      console.log('Utilisateur connecté en tant que membre.');
+      this.router.navigate(['/membre/dashboard']); // Redirige vers une route étudiant
     } else {
       // Erreur si les identifiants sont incorrects
       console.log('Email ou mot de passe incorrect.');

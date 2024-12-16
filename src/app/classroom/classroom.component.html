@@ -1,1 +1,87 @@
-<p>classroom works!</p>
+<div class="container">
+    <div>
+      <button class="btn-add-new-club" (click)="toggleForm()">Add New Classroom</button>
+    </div>
+    <br />
+    <br />
+  
+    <!-- Affichage du formulaire -->
+    <div *ngIf="showForm" class="modal">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Add New Classroom</h5>
+  
+          <!-- Formulaire -->
+          <form (ngSubmit)="onSubmitClassroom()">
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">Num</label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="newClassroom.num"
+                  name="num"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">Capacity</label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="newClassroom.capacity"
+                  name="capacity"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-2 col-form-label">Available</label>
+              <div class="col-sm-10">
+                <select class="form-control" [(ngModel)]="newClassroom.available" name="available">
+                    <option [value]="'true'">Available</option>
+                    <option [value]="'false'">Not Available</option>
+                  </select>
+                  
+              </div>
+            </div>
+  
+            <div class="row mb-3">
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <br />
+  
+    <!-- Liste des salles -->
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table datatable">
+          <thead>
+            <tr>
+              <th>Num</th>
+              <th>Capacity</th>
+              <th>Available</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="listClassroom.length === 0">
+              <td colspan="3" class="text-center">No classrooms yet. Add a new one!</td>
+            </tr>
+            <tr *ngFor="let classroom of listClassroom">
+              <td>{{ classroom.num }}</td>
+              <td>{{ classroom.capacity }}</td>
+              <td>{{ classroom.available ? 'yes' : 'No' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

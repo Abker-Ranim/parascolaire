@@ -54,7 +54,7 @@ body {
   }
   
   .form-control:focus {
-    border-color: #673AB7;
+    border-color: #673ab7;
     box-shadow: 0 0 5px rgba(103, 58, 183, 0.5);
   }
   
@@ -72,51 +72,20 @@ body {
   }
   
   .btn-primary {
-    background-color: #e1D8F1;
-    color: #673AB7;
+    background-color: #e1d8f1;
+    color: #673ab7;
     border: none;
     transition: all 0.3s ease;
-    
   }
   
   .btn-primary:hover {
-    background-color: #d2b8e3;}
-  
-  /* Card Styles for Club */
-  .card-club {
-    margin-bottom: 30px;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-    background-color: #fff;
-    cursor: pointer;
-  }
-  
-  .card-img-top {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-  }
-  
-  .card-body {
-    padding: 15px;
-  }
-  
-  .card-title {
-    font-size: 18px;
-    font-weight: 500;
-    color: #333;
-  }
-  
-  .card-text {
-    font-size: 14px;
-    color: #666;
+    background-color: #d2b8e3;
   }
   
   /* Add New Club Button */
   .btn-add-new-club {
-    background-color: #e1D8F1;
-    color: #673AB7;
+    background-color: #e1d8f1;
+    color: #673ab7;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -128,11 +97,39 @@ body {
     display: block;
     margin: 20px auto;
     float: right;
-  
   }
   
   .btn-add-new-club:hover {
     background-color: #d2b8e3;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile sous le tableau */
+    border-radius: 8px; /* Ajoute des coins arrondis pour un effet plus doux */
+    background-color: #fff; /* Assure que le fond du tableau est blanc pour que l'ombre ressorte */
+  }
+  
+  table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  table th {
+    background-color: #55b3ff;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  table tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
   }
   
   /* Responsive Design */
@@ -153,11 +150,6 @@ body {
     .btn {
       width: 100%;
     }
-  
-    .col-lg-3 {
-      width: 100%;
-      margin-bottom: 20px;
-    }
   }
   
   @media (max-width: 480px) {
@@ -172,5 +164,35 @@ body {
     .card-title {
       font-size: 16px;
     }
+  }
+  .badge {
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 24px; /* Taille d'icône plus grande pour plus de visibilité */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .badge-warning {
+    background-color: #ffdc60; /* Couleur vive pour "En Cours" */
+  }
+  
+  .badge-success {
+    background-color: #6ef673; /* Couleur verte pour "Accepté" */
+  }
+  
+  .badge-danger {
+    background-color: #ff6b6b;/* Couleur rouge pour "Rejeté" */
+  }
+  
+  .fas {
+    color: white; /* Couleur de l'icône en blanc pour ressortir */
+    font-size: 18px; /* Ajustement de la taille de l'icône */
+  }
+  
+  .fas:hover {
+    transform: scale(1.2); /* Effet de zoom lors du survol de l'icône */
+    transition: transform 0.3s ease-in-out; /* Transition douce */
   }
   
