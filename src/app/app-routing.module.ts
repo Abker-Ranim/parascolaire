@@ -13,6 +13,7 @@ import { ClubProfileComponent } from './club-profile/club-profile.component';
 import { RequestEventComponent } from './request-event/request-event.component';
 import { RequestClassroomComponent } from './request-classroom/request-classroom.component';
 import { ProfileComponent } from './profile/profile.component';
+import { DashboardClubComponent } from './dashboard-club/dashboard-club.component';
 
 const routes: Routes = [
   // Route par défaut : redirige vers la page de connexion
@@ -50,44 +51,42 @@ const routes: Routes = [
   // Routes pour les clubs
   {
     path: 'club',
-    component: BodyComponent, 
+    component: BodyComponent,
     canActivate: [AuthGuard], // Vérifie que l'utilisateur est authentifié
     data: { role: 'club' }, // Rôle attendu pour accéder à ces routes
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'dashboardClub', component: DashboardClubComponent },
       { path: 'home', component: HomeComponent },
       { path: 'club', component: ClubComponent },
       { path: 'RequestEvent', component: RequestEventComponent },
       { path: 'RequestClassroom', component: RequestClassroomComponent },
       { path: 'profile', component: ProfileComponent },
-
     ],
   },
 
-   // Routes pour les étudiants
-   {
+  // Routes pour les étudiants
+  {
     path: 'student',
-    component: BodyComponent, 
+    component: BodyComponent,
     canActivate: [AuthGuard], // Vérifie que l'utilisateur est authentifié
     data: { role: 'student' }, // Rôle attendu pour accéder à ces routes
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
+
       { path: 'home', component: HomeComponent },
       { path: 'club', component: ClubComponent },
       { path: 'club/:clubId', component: ClubProfileComponent },
     ],
   },
-   // Routes pour les membres
-   {
+  // Routes pour les membres
+  {
     path: 'membre',
-    component: BodyComponent, 
+    component: BodyComponent,
     canActivate: [AuthGuard], // Vérifie que l'utilisateur est authentifié
     data: { role: 'membre' }, // Rôle attendu pour accéder à ces routes
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
       { path: 'home', component: HomeComponent },
       { path: 'club', component: ClubComponent },
       { path: 'club/:clubId', component: ClubProfileComponent },

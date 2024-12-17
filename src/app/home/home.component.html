@@ -1,6 +1,6 @@
 <div>
     <div>
-      <button class="btn-add-new-club" (click)="toggleForm()">Add New Event</button>
+      <button class="btn-add-new-club" (click)="toggleForm()" *ngIf="userRole === 'admin'">Add New Event</button>
     </div>
     <br>
     <br>

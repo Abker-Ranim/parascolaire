@@ -1,8 +1,29 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {
+  Chart,
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
+Chart.register(
+  LineController,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Tooltip,
+  Legend
+);
 @Component({
   selector: 'app-club-profile',
   standalone: true,
@@ -10,7 +31,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
-export class ProfileComponent {
+export class ProfileComponent  {
   constructor(private router: Router, private route: ActivatedRoute) {}
   onReturnClick(): void {
     this.router.navigate(['club']);
@@ -25,6 +46,7 @@ export class ProfileComponent {
     instagram: 'kevin_insta',
     linkedin: 'kevin_linkedin',
     creationDate: '2022/06/01',
+    imageUrl:''
   };
 
   onSaveChanges() {
@@ -32,10 +54,21 @@ export class ProfileComponent {
 
     // Après avoir sauvegardé les changements, revenir à l'onglet Overview
     this.activateTab('profile-overview');
+  }onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.user.imageUrl = e.target.result; // Enregistre l'image en base64
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   activateTab(tabId: string) {
     // Cette méthode peut être utilisée pour activer le bon onglet via la classe CSS ou autre logique
     // Par exemple, en utilisant un ViewChild et une méthode de gestion des onglets si vous êtes sur Angular
   }
+ 
+
 }

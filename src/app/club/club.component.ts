@@ -11,6 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./club.component.css']
 })
 export class ClubComponent implements OnInit{
+  userRole: string = ''; // Le rôle de l'utilisateur (admin, club, student, membre)
+
+
   showForm = false;
   clubCards: any[] = []; // Tableau pour stocker les cartes des clubs
   newClub = {
@@ -25,10 +28,12 @@ export class ClubComponent implements OnInit{
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.userRole = localStorage.getItem('userRole') || 'membre';
     // Charger les cartes depuis le LocalStorage si elles existent
     const savedCards = localStorage.getItem('clubCards');
     if (savedCards) {
       this.clubCards = JSON.parse(savedCards);
+
     }
 
     // Récupérer l'ID du club depuis les paramètres de l'URL (si existe)

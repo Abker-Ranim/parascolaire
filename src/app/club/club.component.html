@@ -1,7 +1,7 @@
 <div class="container">
     <!-- Bouton pour afficher le formulaire -->
     <div>
-      <button class="btn-add-new-club" (click)="toggleForm()">Add New Club</button>
+      <button class="btn-add-new-club" (click)="toggleForm()" *ngIf="userRole === 'admin'">Add New Club</button>
     </div>
     <br />
   

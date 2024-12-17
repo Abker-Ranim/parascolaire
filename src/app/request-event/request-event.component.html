@@ -16,7 +16,6 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Event</h5>
-
         <!-- Event Request Form -->
         <form (ngSubmit)="onSubmitEvent()">
           <div class="form-group">
@@ -138,8 +137,8 @@
               <span
                 *ngIf="event.requestStatus === 'Accepted'"
                 class="badge badge-success"
-                ><i class="fas fa-thumbs-up"></i> </span
-              >
+                ><i class="fas fa-thumbs-up"></i>
+              </span>
               <span
                 *ngIf="event.requestStatus === 'Rejected'"
                 class="badge badge-danger"
@@ -177,18 +176,19 @@
               <span
                 *ngIf="event.requestStatus === 'In Progress'"
                 class="badge badge-warning"
-                ><i class="fas fa-sync-alt fa-spin"></i></span
-              >
+                ><i class="fas fa-sync-alt fa-spin"></i
+              ></span>
               <span
                 *ngIf="event.requestStatus === 'Accepted'"
                 class="badge badge-success"
-                ><i class="fas fa-thumbs-up"></i></span
-              >
+                ><i class="fas fa-thumbs-up"></i
+              ></span>
               <span
                 *ngIf="event.requestStatus === 'Rejected'"
                 class="badge badge-danger"
-                > <i class="fas fa-thumbs-down"></i></span
               >
+                <i class="fas fa-thumbs-down"></i
+              ></span>
             </td>
             <td>
               <button

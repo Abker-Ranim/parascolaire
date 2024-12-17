@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
       const user = { role: 'club' };
       localStorage.setItem('userRole', user.role);
       console.log('Utilisateur connecté en tant que club.');
-      this.router.navigate(['/club/dashboard']); // Redirige vers une route étudiant
+      this.router.navigate(['/club/profile']); // Redirige vers une route étudiant
     } else if (
       this.loginObj.email === 'student@example.com' &&
       this.loginObj.password === 'student123'

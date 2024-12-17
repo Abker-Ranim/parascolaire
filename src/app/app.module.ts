@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { BodyComponent } from './body/body.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { DashboardClubComponent } from './dashboard-club/dashboard-club.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
     NavbarComponent,
     SidebarComponent,
     BodyComponent,
+    DashboardClubComponent,
     
     
   ],

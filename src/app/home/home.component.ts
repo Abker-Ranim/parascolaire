@@ -13,7 +13,9 @@ import { FormsModule } from '@angular/forms';
 export class HomeComponent implements OnInit {
   // Liste des clubs
   clubs: string[] = ['Club A', 'Club B', 'Club C'];
+  userRole: string = ''; // Le rôle de l'utilisateur (admin, club, student, membre)
 
+ 
   // Nouveau événement
   newEvent = {
     nom: '',
@@ -35,6 +37,7 @@ export class HomeComponent implements OnInit {
   isOtherSelected = false;
 
   ngOnInit(): void {
+    this.userRole = localStorage.getItem('userRole') || 'membre';
     const savedEvents = localStorage.getItem('events');
     if (savedEvents) {
       this.events = JSON.parse(savedEvents);
