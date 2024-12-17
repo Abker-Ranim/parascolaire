@@ -11,14 +11,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { BodyComponent } from './body/body.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ClubComponent } from './club/club.component';
-import { StudentComponent } from './student/student.component';
-import { HomeComponent } from './home/home.component';
-import { ClassroomComponent } from './classroom/classroom.component';
-import { ClubProfileComponent } from './club-profile/club-profile.component';
-import { RequestEventComponent } from './request-event/request-event.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
+
 
 @NgModule({
   declarations: [
@@ -27,8 +22,10 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     SidebarComponent,
     BodyComponent,
+    
+    
   ],
-  imports: [BrowserModule, AppRoutingModule, RouterModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, RouterModule, FormsModule,ReactiveFormsModule],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

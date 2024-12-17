@@ -11,6 +11,8 @@ import { ClassroomComponent } from './classroom/classroom.component';
 import { AuthGuard } from './auth.guard';
 import { ClubProfileComponent } from './club-profile/club-profile.component';
 import { RequestEventComponent } from './request-event/request-event.component';
+import { RequestClassroomComponent } from './request-classroom/request-classroom.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   // Route par défaut : redirige vers la page de connexion
@@ -40,6 +42,7 @@ const routes: Routes = [
       { path: 'classroom', component: ClassroomComponent },
       { path: 'student', component: StudentComponent },
       { path: 'RequestEvent', component: RequestEventComponent },
+      { path: 'RequestClassroom', component: RequestClassroomComponent },
       { path: 'club/:clubId', component: ClubProfileComponent },
     ],
   },
@@ -56,7 +59,9 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'club', component: ClubComponent },
       { path: 'RequestEvent', component: RequestEventComponent },
-      
+      { path: 'RequestClassroom', component: RequestClassroomComponent },
+      { path: 'profile', component: ProfileComponent },
+
     ],
   },
 

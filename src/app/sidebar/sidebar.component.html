@@ -36,6 +36,15 @@
         <i class="bi bi-bar-chart"></i><span>Request an Event</span>
       </a>
     </li>
+    <li class="nav-item" *ngIf="userRole === 'admin' || userRole === 'club'">
+      <a
+        class="nav-link collapsed"
+        routerLink="RequestClassroom"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-bar-chart"></i><span>Request a Classroom</span>
+      </a>
+    </li>
 
     <!-- Liens visibles uniquement pour Admin -->
     <li class="nav-item" *ngIf="userRole === 'admin'">
@@ -55,6 +64,16 @@
         routerLinkActive="active"
       >
         <i class="bi bi-journal-text"></i><span>Classroom</span>
+      </a>
+    </li>
+    <!-- Liens visibles uniquement pour club -->
+    <li class="nav-item" *ngIf="userRole === 'club'">
+      <a
+        class="nav-link collapsed"
+        routerLink="profile"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-journal-text"></i><span>Profile</span>
       </a>
     </li>
   </ul>
