@@ -32,7 +32,7 @@
               </li>
   
               <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" *ngIf="userRole === 'admin'">Edit Profile</button>
               </li>
   
               <li class="nav-item">
@@ -61,7 +61,7 @@
                 </div>
               </div>
   
-              <div class="tab-pane fade" id="profile-edit">
+              <div class="tab-pane fade" id="profile-edit" *ngIf="userRole === 'admin'">
                 <!-- Profile Edit Form -->
                 <form (ngSubmit)="onSaveChanges()">
                   <div class="row mb-3">

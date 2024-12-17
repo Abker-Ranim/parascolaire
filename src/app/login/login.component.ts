@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
       const user = { role: 'student' };
       localStorage.setItem('userRole', user.role);
       console.log('Utilisateur connecté en tant que student.');
-      this.router.navigate(['/student/dashboard']); // Redirige vers une route étudiant
+      this.router.navigate(['/student/home']); // Redirige vers une route étudiant
     } else if (
       this.loginObj.email === 'membre@example.com' &&
       this.loginObj.password === 'membre123'
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
       const user = { role: 'membre' };
       localStorage.setItem('userRole', user.role);
       console.log('Utilisateur connecté en tant que membre.');
-      this.router.navigate(['/membre/dashboard']); // Redirige vers une route étudiant
+      this.router.navigate(['/membre/home']); // Redirige vers une route étudiant
     } else {
       // Erreur si les identifiants sont incorrects
       console.log('Email ou mot de passe incorrect.');

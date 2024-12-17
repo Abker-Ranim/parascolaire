@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ClubProfileComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
   onReturnClick(): void {
-    this.router.navigate(['club']);
+    this.router.navigate([`/${this.userRole}/club`]);
   }
   user = {
     name: 'Kevin Anderson',
@@ -37,5 +37,11 @@ export class ClubProfileComponent {
   activateTab(tabId: string) {
     // Cette méthode peut être utilisée pour activer le bon onglet via la classe CSS ou autre logique
     // Par exemple, en utilisant un ViewChild et une méthode de gestion des onglets si vous êtes sur Angular
+  }
+  userRole: string = ''; // Le rôle de l'utilisateur (admin, club, student, membre)
+
+  ngOnInit(): void {
+    // Simulez la récupération du rôle (remplacez ceci par votre logique réelle)
+    this.userRole = localStorage.getItem('userRole') || 'membre'; // Exemple : 'admin', 'club', 'student', ou 'membre'
   }
 }
