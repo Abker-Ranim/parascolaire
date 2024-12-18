@@ -24,8 +24,9 @@ export class RequestEventComponent implements OnInit {
 
   // List of Events
   events: any[] = [];
-  userRole: string = '';  // Role of the user (admin or club)
+  userRole: string = ''; // Role of the user (admin or club)
   showForm = false; // Control form visibility
+  formClicked = false; // Control form visibility
   eventService: any;
 
   ngOnInit(): void {
@@ -43,6 +44,17 @@ export class RequestEventComponent implements OnInit {
     this.showForm = !this.showForm;
   }
 
+  closeForm(): void {
+    if (!this.formClicked) {
+      this.showForm = false;
+      this.formClicked = false;
+    }
+  }
+
+  toggleFormClick(): void {
+    this.formClicked = true;
+  }
+
   onSubmitEvent(): void {
     if (
       !this.newEvent.name ||
@@ -57,7 +69,13 @@ export class RequestEventComponent implements OnInit {
     }
 
     // Vérifier si un événement identique existe déjà
-    if (this.events.some(event => event.name === this.newEvent.name && event.startDate === this.newEvent.startDate)) {
+    if (
+      this.events.some(
+        (event) =>
+          event.name === this.newEvent.name &&
+          event.startDate === this.newEvent.startDate
+      )
+    ) {
       alert('This event already exists!');
       return;
     }

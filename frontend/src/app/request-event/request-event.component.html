@@ -12,8 +12,8 @@
   <br /><br />
 
   <!-- Conditional display of the form -->
-  <div *ngIf="showForm" class="modal">
-    <div class="card">
+  <div *ngIf="showForm" class="modal" (click)="closeForm()">
+    <div class="card" (click)="toggleFormClick()">
       <div class="card-body">
         <h5 class="card-title">Event</h5>
         <!-- Event Request Form -->
