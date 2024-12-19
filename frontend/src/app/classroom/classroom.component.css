@@ -118,11 +118,12 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile sous le tableau */
     border-radius: 8px; /* Ajoute des coins arrondis pour un effet plus doux */
     background-color: #fff; /* Assure que le fond du tableau est blanc pour que l'ombre ressorte */
+
   }
   
   table th, table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ddd;
   }
   
@@ -138,7 +139,6 @@ body {
   
   table tr:hover {
     background-color: #ddd;
-    cursor: pointer;
   }
   
   /* Responsive Design */

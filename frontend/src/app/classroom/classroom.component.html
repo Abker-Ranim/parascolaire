@@ -77,7 +77,10 @@
             <tr *ngFor="let classroom of listClassroom">
               <td>{{ classroom.num }}</td>
               <td>{{ classroom.capacity }}</td>
-              <td>{{ classroom.available ? 'yes' : 'No' }}</td>
+              <td>
+                <i *ngIf="classroom.available" class="fa fa-check text-success"></i>
+                <i *ngIf="!classroom.available" class="fa fa-times text-danger"></i>
+              </td>
             </tr>
           </tbody>
         </table>
