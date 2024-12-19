@@ -18,6 +18,7 @@ export class ClubComponent implements OnInit {
   newClub = {
     name: '',
     email: '',
+    password: '',
     date: '',
     description: '',
     imageUrl: '',
@@ -52,6 +53,7 @@ export class ClubComponent implements OnInit {
     if (
       !this.newClub.name ||
       !this.newClub.email ||
+      !this.newClub.password ||
       !this.newClub.date ||
       !this.newClub.description
     ) {
@@ -70,6 +72,7 @@ export class ClubComponent implements OnInit {
     this.newClub = {
       name: '',
       email: '',
+      password: '',
       date: '',
       description: '',
       imageUrl: '',
@@ -90,7 +93,6 @@ export class ClubComponent implements OnInit {
 
   // Méthode pour naviguer vers la page de profil d'un club lorsqu'on clique sur une carte
   navigateToClubProfile(clubId: number) {
-
     this.router.navigate([`/${this.userRole}/club/${clubId}`]);
   }
 }

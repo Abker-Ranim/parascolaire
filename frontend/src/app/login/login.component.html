@@ -51,8 +51,10 @@
       <!-- Partie Login -->
       <div class="login">
         <form #loginForm="ngForm" (ngSubmit)="onLogin()">
-          <label for="chk" aria-hidden="true">Welcome ! <br>
-             Let's get you started </label>
+          <label for="chk" aria-hidden="true"
+            >Welcome ! <br />
+            Let's get you started
+          </label>
 
           <div class="input-container">
             <input
@@ -73,8 +75,7 @@
               [(ngModel)]="loginObj.password"
               required
             />
-            <span class="icon"><i class="fas fa-lock"></i>
-            </span>
+            <span class="icon"><i class="fas fa-lock"></i> </span>
           </div>
 
           <button type="submit">Login</button>
