@@ -15,8 +15,8 @@ export class ClassroomComponent implements OnInit {
     num: string;
     capacity: string;
     available: boolean;
-    unavailableDates: string[];
-  } = { num: '', capacity: '', available: true, unavailableDates: [] };
+   
+  } = { num: '', capacity: '', available: true };
 
   listClassroom: any[] = [];
   showForm = false; // Control the visibility of the form
@@ -44,16 +44,9 @@ export class ClassroomComponent implements OnInit {
     // Ensure 'available' is a boolean
     const available = this.newClassroom.available === true;
 
-    // Ensure unavailableDates is an array
-    const unavailableDates = Array.isArray(this.newClassroom.unavailableDates)
-      ? this.newClassroom.unavailableDates
-      : [];
-
     const newClassroomWithId = {
       ...this.newClassroom,
       available: available,
-      id: Date.now(),
-      unavailableDates: unavailableDates,
     };
 
     // Add new classroom to the list
@@ -63,7 +56,7 @@ export class ClassroomComponent implements OnInit {
     localStorage.setItem('listClassroom', JSON.stringify(this.listClassroom));
 
     // Reset the form
-    this.newClassroom = { num: '', capacity: '', available: true, unavailableDates: [] };
+    this.newClassroom = { num: '', capacity: '', available: true };
     this.showForm = false; // Close form after submission
   }
 }
