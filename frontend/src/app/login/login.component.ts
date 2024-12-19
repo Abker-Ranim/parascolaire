@@ -71,6 +71,6 @@ export class LoginComponent implements OnInit {
         console.error('Invalid login credentials');
       }
       this.spinner.hide();
-    }, 1000); // Simulate a delay for demonstration purposes
+    }, 300); // Simulate a delay for demonstration purposes
   }
 }
