@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import de CommonModule
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @Component({
   selector: 'app-clubs',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Assurez-vous d'importer CommonModule
+  imports: [CommonModule, FormsModule, NgxSpinnerModule], // Assurez-vous d'importer CommonModule
   templateUrl: './club.component.html',
   styleUrls: ['./club.component.css'],
 })
@@ -25,7 +26,7 @@ export class ClubComponent implements OnInit {
   };
   selectedClub: any; // Variable pour stocker les informations du club sélectionné
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.userRole = localStorage.getItem('userRole') || 'membre';
@@ -50,34 +51,38 @@ export class ClubComponent implements OnInit {
 
   onSubmit() {
     // Vérifier que tous les champs obligatoires sont remplis
-    if (
-      !this.newClub.name ||
-      !this.newClub.email ||
-      !this.newClub.password ||
-      !this.newClub.date ||
-      !this.newClub.description
-    ) {
-      alert('Please fill in all required fields!');
-      return;
-    }
-
-    // Ajout de la nouvelle carte au tableau des cartes de club
-    const newClubWithId = { ...this.newClub, id: Date.now() }; // Utiliser Date.now() pour générer un ID unique
-    this.clubCards.push(newClubWithId);
-
-    // Sauvegarder les cartes dans le LocalStorage
-    localStorage.setItem('clubCards', JSON.stringify(this.clubCards));
-
-    // Réinitialisation du formulaire
-    this.newClub = {
-      name: '',
-      email: '',
-      password: '',
-      date: '',
-      description: '',
-      imageUrl: '',
-    };
-    this.showForm = false; // Ferme le formulaire après la soumission
+    this.spinner.show();
+    setTimeout(() => {
+      if (
+        !this.newClub.name ||
+        !this.newClub.email ||
+        !this.newClub.password ||
+        !this.newClub.date ||
+        !this.newClub.description
+      ) {
+        alert('Please fill in all required fields!');
+        return;
+      }
+  
+      // Ajout de la nouvelle carte au tableau des cartes de club
+      const newClubWithId = { ...this.newClub, id: Date.now() }; // Utiliser Date.now() pour générer un ID unique
+      this.clubCards.push(newClubWithId);
+  
+      // Sauvegarder les cartes dans le LocalStorage
+      localStorage.setItem('clubCards', JSON.stringify(this.clubCards));
+  
+      // Réinitialisation du formulaire
+      this.newClub = {
+        name: '',
+        email: '',
+        password: '',
+        date: '',
+        description: '',
+        imageUrl: '',
+      };
+      this.showForm = false;
+      this.spinner.hide(); // Ferme le formulaire après la soumission
+    },500);
   }
 
   onFileChange(event: any) {

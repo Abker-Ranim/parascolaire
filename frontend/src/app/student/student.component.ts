@@ -10,11 +10,18 @@ import {
 } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatPaginatorModule, MatTableModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    NgxSpinnerModule,
+  ],
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css'],
 })
@@ -37,7 +44,8 @@ export class StudentComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -58,39 +66,45 @@ export class StudentComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    // Vérifier que tous les champs obligatoires sont remplis
-    if (
-      !this.newStudent.firstname ||
-      !this.newStudent.lastname ||
-      !this.newStudent.email
-    ) {
-      alert('Please fill in all required fields!');
-      return;
-    }
+    this.spinner.show(); // Affiche le spinner au début
 
-    // Vérifier si l'email est valide
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.newStudent.email)) {
-      alert('Please enter a valid email address!');
-      return;
-    }
+    // Simulez un délai pour tester le spinner
+    setTimeout(() => {
+      // Vérifier que tous les champs obligatoires sont remplis
+      if (
+        !this.newStudent.firstname ||
+        !this.newStudent.lastname ||
+        !this.newStudent.email
+      ) {
+        alert('Please fill in all required fields!');
+        return;
+      }
 
-    // Ajouter un étudiant avec un ID unique
-    const newStudentWithId = { ...this.newStudent, id: Date.now() };
-    this.listStudent = [...this.listStudent, newStudentWithId]; // Créer une nouvelle référence du tableau
-    this.dataSource.data = this.listStudent; // Mettre à jour la source des données
+      // Vérifier si l'email est valide
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.newStudent.email)) {
+        alert('Please enter a valid email address!');
+        return;
+      }
 
-    // Sauvegarder la liste mise à jour dans le localStorage
-    localStorage.setItem('listStudent', JSON.stringify(this.listStudent));
+      // Ajouter un étudiant avec un ID unique
+      const newStudentWithId = { ...this.newStudent, id: Date.now() };
+      this.listStudent = [...this.listStudent, newStudentWithId]; // Créer une nouvelle référence du tableau
+      this.dataSource.data = this.listStudent; // Mettre à jour la source des données
 
-    // Réinitialiser le formulaire
-    this.newStudent = {
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      birthday: '',
-    };
-    this.showForm = false; // Fermer le formulaire après soumission
+      // Sauvegarder la liste mise à jour dans le localStorage
+      localStorage.setItem('listStudent', JSON.stringify(this.listStudent));
+
+      // Réinitialiser le formulaire
+      this.newStudent = {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        birthday: '',
+      };
+      this.showForm = false;
+      this.spinner.hide(); // Fermer le formulaire après soumission
+    }, 500);
   }
 }

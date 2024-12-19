@@ -2,25 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @Component({
   selector: 'app-classroom',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule],
   templateUrl: './classroom.component.html',
-  styleUrls: ['./classroom.component.css']
+  styleUrls: ['./classroom.component.css'],
 })
 export class ClassroomComponent implements OnInit {
   newClassroom: {
     num: string;
     capacity: string;
     available: boolean;
-   
   } = { num: '', capacity: '', available: true };
 
   listClassroom: any[] = [];
   showForm = false; // Control the visibility of the form
-
+  constructor(private spinner: NgxSpinnerService) {}
   ngOnInit(): void {
     // Load classrooms from localStorage if available
     const savedClassrooms = localStorage.getItem('listClassroom');
@@ -35,28 +35,38 @@ export class ClassroomComponent implements OnInit {
   }
 
   onSubmitClassroom() {
-      // Vérifier que tous les champs obligatoires sont remplis
-   if (!this.newClassroom.num || !this.newClassroom.capacity || !this.newClassroom.available) {
-    alert('Please fill in all required fields!');
-    return;
-  }
+    // Vérifier que tous les champs obligatoires sont remplis
+    this.spinner.show(); // Affiche le spinner au début
 
-    // Ensure 'available' is a boolean
-    const available = this.newClassroom.available === true;
+    // Simulez un délai pour tester le spinner
+    setTimeout(() => {
+      if (
+        !this.newClassroom.num ||
+        !this.newClassroom.capacity ||
+        !this.newClassroom.available
+      ) {
+        alert('Please fill in all required fields!');
+        return;
+      }
 
-    const newClassroomWithId = {
-      ...this.newClassroom,
-      available: available,
-    };
+      // Ensure 'available' is a boolean
+      const available = this.newClassroom.available === true;
 
-    // Add new classroom to the list
-    this.listClassroom.push(newClassroomWithId);
+      const newClassroomWithId = {
+        ...this.newClassroom,
+        available: available,
+      };
 
-    // Save to localStorage
-    localStorage.setItem('listClassroom', JSON.stringify(this.listClassroom));
+      // Add new classroom to the list
+      this.listClassroom.push(newClassroomWithId);
 
-    // Reset the form
-    this.newClassroom = { num: '', capacity: '', available: true };
-    this.showForm = false; // Close form after submission
+      // Save to localStorage
+      localStorage.setItem('listClassroom', JSON.stringify(this.listClassroom));
+
+      // Reset the form
+      this.newClassroom = { num: '', capacity: '', available: true };
+      this.showForm = false;
+      this.spinner.hide();
+    }, 500);
   }
 }
