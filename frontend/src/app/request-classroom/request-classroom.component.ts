@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -31,6 +31,7 @@ export class RequestClassroomComponent implements OnInit {
   requests: any[] = [];
   userRole: string = ''; // Rôle de l'utilisateur (admin ou club)
   showForm = false; // Contrôle la visibilité du formulaire
+  formContainer: ElementRef | undefined;
 
   ngOnInit(): void {
     // Récupérer toutes les demandes du localStorage
@@ -45,6 +46,10 @@ export class RequestClassroomComponent implements OnInit {
 
   toggleForm(): void {
     this.showForm = !this.showForm;
+  }
+  closeFormOnOutsideClick(event: MouseEvent) {
+    // Vérifiez si l'événement vient de l'extérieur
+    this.showForm = false;
   }
 
   onSubmitRequest(): void {
@@ -87,5 +92,11 @@ export class RequestClassroomComponent implements OnInit {
     // Modifier le statut de la demande
     request.requestStatus = newStatus;
     this.saveRequests();
+  }
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showForm && this.formContainer && this.formContainer.nativeElement && !this.formContainer.nativeElement.contains(event.target)) {
+      this.showForm = false;
+    }
   }
 }

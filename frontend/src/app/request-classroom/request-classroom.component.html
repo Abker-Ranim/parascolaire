@@ -12,8 +12,8 @@
   <br /><br />
 
   <!-- Formulaire de demande de salle -->
-  <div *ngIf="showForm" class="modal">
-    <div class="card">
+  <div *ngIf="showForm" class="modal" (click)="closeFormOnOutsideClick($event)">
+    <div class="card" (click)="$event.stopPropagation()">
       <div class="card-body">
         <h5 class="card-title">Request a Classroom</h5>
         <form (ngSubmit)="onSubmitRequest()">

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -36,6 +36,7 @@ export class ClassroomComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>([]);
   listClassroom: any[] = [];
   showForm = false; // Control the visibility of the form
+  @ViewChild('formContainer') formContainer!: ElementRef;
   constructor(private spinner: NgxSpinnerService) {}
 
   ngAfterViewInit(): void {
@@ -54,7 +55,10 @@ export class ClassroomComponent implements OnInit, AfterViewInit {
   toggleForm(): void {
     this.showForm = !this.showForm; // If form is visible, hide it; otherwise, show it
   }
-
+  closeFormOnOutsideClick(event: MouseEvent) {
+    // Vérifiez si l'événement vient de l'extérieur
+    this.showForm = false;
+  }
   onSubmitClassroom() {
     // Vérifier que tous les champs obligatoires sont remplis
     this.spinner.show(); // Affiche le spinner au début
@@ -90,5 +94,12 @@ export class ClassroomComponent implements OnInit, AfterViewInit {
       this.showForm = false;
       this.spinner.hide();
     }, 500);
+   
+  }
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showForm && this.formContainer && !this.formContainer.nativeElement.contains(event.target as Node)) {
+      this.showForm = false;
+    }
   }
 }

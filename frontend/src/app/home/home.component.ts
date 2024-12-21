@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   // Liste des clubs
   clubs: string[] = ['Club A', 'Club B', 'Club C'];
   userRole: string = ''; // Le rôle de l'utilisateur (admin, club, student, membre)
+  @ViewChild('formContainer') formContainer!: ElementRef;
   constructor(private router: Router, private spinner: NgxSpinnerService) {}
   // Nouveau événement
   newEvent = {
@@ -43,6 +44,10 @@ export class HomeComponent implements OnInit {
     if (savedEvents) {
       this.events = JSON.parse(savedEvents);
     }
+  }
+  closeFormOnOutsideClick(event: MouseEvent) {
+    // Vérifiez si l'événement vient de l'extérieur
+    this.showForm = false;
   }
 
   toggleForm(): void {
@@ -98,7 +103,12 @@ export class HomeComponent implements OnInit {
       this.spinner.hide(); // Cache le spinner après l'opération
     }, 500); // Simule un délai de 2 secondes pour les tests
   }
-  
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showForm && this.formContainer && !this.formContainer.nativeElement.contains(event.target as Node)) {
+      this.showForm = false;
+    }
+  }
 
   onFileChange(event: any): void {
     const file = event.target.files[0];

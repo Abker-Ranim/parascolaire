@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgxSpinnerModule } from 'ngx-spinner';
+
 @Component({
   selector: 'app-students',
   standalone: true,
@@ -30,6 +31,9 @@ export class StudentComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<any>;
+
+  @ViewChild('formContainer', { static: false }) formContainer!: ElementRef;
+
   showForm = false;
   listStudent: any[] = [];
   newStudent = {
@@ -65,7 +69,11 @@ export class StudentComponent implements OnInit, AfterViewInit {
   toggleForm() {
     this.showForm = !this.showForm;
   }
-
+  closeFormOnOutsideClick(event: MouseEvent) {
+    // Vérifiez si l'événement vient de l'extérieur
+    this.showForm = false;
+  }
+  
   onSubmit() {
     this.spinner.show();
 
@@ -101,5 +109,13 @@ export class StudentComponent implements OnInit, AfterViewInit {
       this.showForm = false;
       this.spinner.hide();
     }, 500);
+  }
+
+  // Ferme le formulaire si un clic est détecté à l'extérieur
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showForm && this.formContainer && !this.formContainer.nativeElement.contains(event.target)) {
+      this.showForm = false;
+    }
   }
 }

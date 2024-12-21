@@ -16,8 +16,8 @@
   <br />
 
   <!-- Affichage du formulaire -->
-  <div *ngIf="showForm" class="modal">
-    <div class="card">
+  <div *ngIf="showForm" class="modal" (click)="closeFormOnOutsideClick($event)">
+    <div class="card" (click)="$event.stopPropagation()">
       <div class="card-body">
         <h5 class="card-title">Add New Classroom</h5>
 
