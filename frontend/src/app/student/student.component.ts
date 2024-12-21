@@ -8,7 +8,7 @@ import {
   MatTableModule,
   MatTable,
 } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -21,6 +21,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatPaginatorModule,
     MatTableModule,
     NgxSpinnerModule,
+    MatSortModule,
   ],
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css'],
@@ -30,7 +31,7 @@ export class StudentComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<any>;
   showForm = false;
-  listStudent: any[] = []; // Liste des étudiants
+  listStudent: any[] = [];
   newStudent = {
     firstname: '',
     lastname: '',
@@ -49,7 +50,6 @@ export class StudentComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    // Chargement des étudiants depuis localStorage s'ils existent
     const savedStudents = localStorage.getItem('listStudent');
     if (savedStudents) {
       this.listStudent = JSON.parse(savedStudents);
@@ -59,18 +59,17 @@ export class StudentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   toggleForm() {
-    this.showForm = !this.showForm; // Afficher/Masquer le formulaire
+    this.showForm = !this.showForm;
   }
 
   onSubmit() {
-    this.spinner.show(); // Affiche le spinner au début
+    this.spinner.show();
 
-    // Simulez un délai pour tester le spinner
     setTimeout(() => {
-      // Vérifier que tous les champs obligatoires sont remplis
       if (
         !this.newStudent.firstname ||
         !this.newStudent.lastname ||
@@ -80,22 +79,18 @@ export class StudentComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      // Vérifier si l'email est valide
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.newStudent.email)) {
         alert('Please enter a valid email address!');
         return;
       }
 
-      // Ajouter un étudiant avec un ID unique
       const newStudentWithId = { ...this.newStudent, id: Date.now() };
-      this.listStudent = [...this.listStudent, newStudentWithId]; // Créer une nouvelle référence du tableau
-      this.dataSource.data = this.listStudent; // Mettre à jour la source des données
+      this.listStudent = [...this.listStudent, newStudentWithId];
+      this.dataSource.data = this.listStudent;
 
-      // Sauvegarder la liste mise à jour dans le localStorage
       localStorage.setItem('listStudent', JSON.stringify(this.listStudent));
 
-      // Réinitialiser le formulaire
       this.newStudent = {
         firstname: '',
         lastname: '',
@@ -104,7 +99,7 @@ export class StudentComponent implements OnInit, AfterViewInit {
         birthday: '',
       };
       this.showForm = false;
-      this.spinner.hide(); // Fermer le formulaire après soumission
+      this.spinner.hide();
     }, 500);
   }
 }
