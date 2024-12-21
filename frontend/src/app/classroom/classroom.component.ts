@@ -1,31 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatTableDataSource,
+  MatTableModule,
+  MatTable,
+} from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-classroom',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgxSpinnerModule,
+    MatPaginatorModule,
+    MatTableModule,
+  ],
   templateUrl: './classroom.component.html',
   styleUrls: ['./classroom.component.css'],
 })
-export class ClassroomComponent implements OnInit {
+export class ClassroomComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatTable) table!: MatTable<any>;
   newClassroom: {
     num: string;
     capacity: string;
     available: boolean;
   } = { num: '', capacity: '', available: true };
-
+  displayedColumns: string[] = ['num', 'capacity', 'available'];
+  dataSource = new MatTableDataSource<any>([]);
   listClassroom: any[] = [];
   showForm = false; // Control the visibility of the form
   constructor(private spinner: NgxSpinnerService) {}
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
   ngOnInit(): void {
     // Load classrooms from localStorage if available
     const savedClassrooms = localStorage.getItem('listClassroom');
     if (savedClassrooms) {
       this.listClassroom = JSON.parse(savedClassrooms);
+      this.dataSource.data = this.listClassroom;
     }
   }
 
@@ -59,6 +80,7 @@ export class ClassroomComponent implements OnInit {
 
       // Add new classroom to the list
       this.listClassroom.push(newClassroomWithId);
+      this.dataSource.data = this.listClassroom; // Mettre à jour la source des données
 
       // Save to localStorage
       localStorage.setItem('listClassroom', JSON.stringify(this.listClassroom));

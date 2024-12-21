@@ -1,4 +1,3 @@
-
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
   size="medium"
@@ -6,93 +5,109 @@
   type="ball-spin"
 >
   <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner><div class="container">
-    <div>
-      <button class="btn-add-new-club" (click)="toggleForm()">Add New Classroom</button>
-    </div>
-    <br />
-    <br />
-  
-    <!-- Affichage du formulaire -->
-    <div *ngIf="showForm" class="modal">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Add New Classroom</h5>
-  
-          <!-- Formulaire -->
-          <form (ngSubmit)="onSubmitClassroom()">
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Num</label>
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="newClassroom.num"
-                  name="num"
-                  required
-                />
-              </div>
+</ngx-spinner>
+<div class="container">
+  <div>
+    <button class="btn-add-new-club" (click)="toggleForm()">
+      Add New Classroom
+    </button>
+  </div>
+  <br />
+  <br />
+
+  <!-- Affichage du formulaire -->
+  <div *ngIf="showForm" class="modal">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Add New Classroom</h5>
+
+        <!-- Formulaire -->
+        <form (ngSubmit)="onSubmitClassroom()">
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Num</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="newClassroom.num"
+                name="num"
+                required
+              />
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Capacity</label>
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="newClassroom.capacity"
-                  name="capacity"
-                  required
-                />
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Capacity</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="newClassroom.capacity"
+                name="capacity"
+                required
+              />
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Available</label>
-              <div class="col-sm-10">
-                <select class="form-control" [(ngModel)]="newClassroom.available" name="available">
-                    <option [value]="'true'">Available</option>
-                    <option [value]="'false'">Not Available</option>
-                  </select>
-                  
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Available</label>
+            <div class="col-sm-10">
+              <select
+                class="form-control"
+                [(ngModel)]="newClassroom.available"
+                name="available"
+              >
+                <option [value]="'true'">Available</option>
+                <option [value]="'false'">Not Available</option>
+              </select>
             </div>
-  
-            <div class="row mb-3">
-              <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <br />
-  
-    <!-- Liste des salles -->
-    <div class="row">
-      <div class="col-lg-12">
-        <table class="table datatable">
-          <thead>
-            <tr>
-              <th>Num</th>
-              <th>Capacity</th>
-              <th>Available</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngIf="listClassroom.length === 0">
-              <td colspan="3" class="text-center">No classrooms yet. Add a new one!</td>
-            </tr>
-            <tr *ngFor="let classroom of listClassroom">
-              <td>{{ classroom.num }}</td>
-              <td>{{ classroom.capacity }}</td>
-              <td>
-                <i *ngIf="classroom.available" class="fa fa-check text-success"></i>
-                <i *ngIf="!classroom.available" class="fa fa-times text-danger"></i>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
+  <br />
+
+  <!-- Liste des salles -->
+<div class="mat-elevation-z8 data-table">
+  <table mat-table [dataSource]="dataSource" class="full-width-table">
+    <!-- Num Column -->
+    <ng-container matColumnDef="num">
+      <th mat-header-cell *matHeaderCellDef>Num</th>
+      <td mat-cell *matCellDef="let classroom">{{ classroom.num }}</td>
+    </ng-container>
+
+    <!-- Capacity Column -->
+    <ng-container matColumnDef="capacity">
+      <th mat-header-cell *matHeaderCellDef>Capacity</th>
+      <td mat-cell *matCellDef="let classroom">{{ classroom.capacity }}</td>
+    </ng-container>
+
+    <!-- Available Column -->
+    <ng-container matColumnDef="available">
+      <th mat-header-cell *matHeaderCellDef>Available</th>
+      <td mat-cell *matCellDef="let classroom">
+        <i *ngIf="classroom.available" class="fa fa-check text-success"></i>
+        <i *ngIf="!classroom.available" class="fa fa-times text-danger"></i>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    #paginator
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>
+</div>
