@@ -20,7 +20,7 @@
     flex-direction: column;
   }
   
-  #pieChart, #barChart, #studentPieChart, #donutChart {
+  #pieChart {
     width: 100%;
     height: 100%;
   }
