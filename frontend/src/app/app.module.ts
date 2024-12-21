@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -48,9 +49,9 @@ import { MatButtonModule } from '@angular/material/button';
     BrowserAnimationsModule,
     MatIconModule,
     MatButtonModule,
-
+    NgApexchartsModule,
   ],
-  
+
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
