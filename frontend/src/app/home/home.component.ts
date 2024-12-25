@@ -45,12 +45,17 @@ export class HomeComponent implements OnInit {
   showForm = false;
   isOtherSelected = false;
   // spinner: any;
-
+  sortEvents(): void {
+    this.events.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }
   ngOnInit(): void {
     this.userRole = localStorage.getItem('userRole') || 'membre';
     const savedEvents = localStorage.getItem('events');
     if (savedEvents) {
       this.events = JSON.parse(savedEvents);
+      this.sortEvents();
     }
   }
   closeFormOnOutsideClick(event: MouseEvent) {
@@ -92,6 +97,7 @@ export class HomeComponent implements OnInit {
 
       // Ajout de l'événement
       this.events.push({ ...this.newEvent });
+      this.sortEvents();
       localStorage.setItem('events', JSON.stringify(this.events));
 
       // Réinitialisation du formulaire
