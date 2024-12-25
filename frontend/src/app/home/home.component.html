@@ -31,10 +31,15 @@
                   [(ngModel)]="newEvent.nom"
                   name="nom"
                   required
+                  ngModel
+                  #n="ngModel"
                 />
               </div>
             </div>
-  
+            <div class="alert alert-danger" *ngIf="n.touched">
+              <i class="fas fa-exclamation-circle me-2"></i>
+              <span>The name is a required field</span>
+            </div>
             <!-- Champ Date Début -->
             <div class="row mb-3">
               <label class="col-sm-2 col-form-label">Start date</label>
@@ -124,10 +129,15 @@
                   rows="4"
                   placeholder="Entrez une description pour l'événement"
                   required
+                  ngModel
+                  #e="ngModel"
                 ></textarea>
               </div>
             </div>
-  
+            <div class="alert alert-danger" *ngIf="e.touched">
+              <i class="fas fa-exclamation-circle me-2"></i>
+              <span> Description is a required field</span>
+            </div>
             <!-- Bouton Submit -->
             <div class="row mb-3">
               <div class="col-sm-10">
