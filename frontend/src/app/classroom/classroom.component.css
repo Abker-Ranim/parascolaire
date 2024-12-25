@@ -79,14 +79,21 @@ body {
   
   /* Primary Button */
   .btn-primary {
-    background-color: #e1d8f1;
-    color: #673ab7;
+    &:disabled {
+      background-color: #cccccc !important;
+      border-color: #bbbbbb !important;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+   
+    &:enabled {
+     background-color: #e1D8F1;
+    color: #673AB7;
     border: none;
     transition: all 0.3s ease;
+    &:hover {
+      background-color: #d2b8e3;}
   }
-  
-  .btn-primary:hover {
-    background-color: #d2b8e3;
   }
   
   /* Add New Classroom Button */
