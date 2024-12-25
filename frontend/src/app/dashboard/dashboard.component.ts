@@ -9,6 +9,23 @@ import * as echarts from 'echarts';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements AfterViewInit {
+  studentCount = 1244; 
+  percentageChange = -12;
+  eventCount: number = 0;
+  eventPercentage: number = 0;
+  eventTrend: string = '';
+
+  ngOnInit() {
+    this.fetchEventStats();
+  }
+
+  fetchEventStats() {
+    // Replace with your actual API call
+    this.eventCount = 157;
+    this.eventPercentage = 15;
+    this.eventTrend = this.eventPercentage > 0 ? 'increase' : 'decrease';
+  }
+ 
   ngAfterViewInit(): void {
     // Configuration du Pie Chart
     const pieChartDom = document.getElementById('pieChart')!;
