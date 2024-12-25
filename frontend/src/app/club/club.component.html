@@ -7,86 +7,134 @@
   <p style="font-size: 20px; color: white">Loading...</p>
 </ngx-spinner>
 <div class="container">
-    <!-- Bouton pour afficher le formulaire -->
-    <div>
-      <button class="btn-add-new-club" (click)="toggleForm()" *ngIf="userRole === 'admin'">Add New Club</button>
-    </div>
-    <br />
-  
-    <!-- Affichage conditionnel du formulaire -->
-    <div *ngIf="showForm" class="modal" (click)="closeFormOnOutsideClick($event)" >
-      <div class="card" (click)="$event.stopPropagation()">
-        <div class="card-body">
-          <h5 class="card-title">Club</h5>
-  
-          <!-- Formulaire général -->
-          <form (ngSubmit)="onSubmit()">
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Name</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" [(ngModel)]="newClub.name" name="name" required />
-              </div>
+  <!-- Bouton pour afficher le formulaire -->
+  <div>
+    <button
+      class="btn-add-new-club"
+      (click)="toggleForm()"
+      *ngIf="userRole === 'admin'"
+    >
+      Add New Club
+    </button>
+  </div>
+  <br />
+
+  <!-- Affichage conditionnel du formulaire -->
+  <div *ngIf="showForm" class="modal" (click)="closeFormOnOutsideClick($event)">
+    <div class="card" (click)="$event.stopPropagation()">
+      <div class="card-body">
+        <h5 class="card-title">Club</h5>
+
+        <!-- Formulaire général -->
+        <form #f="ngForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="newClub.name"
+                name="name"
+                required
+              />
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" [(ngModel)]="newClub.email" name="email" required />
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+              <input
+                type="email"
+                class="form-control"
+                [(ngModel)]="newClub.email"
+                name="email"
+                required
+              />
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Password</label>
-              <div class="col-sm-10">
-                <input
-                  type="password"
-                  class="form-control"
-                  [(ngModel)]="newClub.password"
-                  name="password"
-                  required
-                />
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+              <input
+                type="password"
+                class="form-control"
+                [(ngModel)]="newClub.password"
+                name="password"
+                required
+              />
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Image Upload</label>
-              <div class="col-sm-10">
-                <input class="form-control" type="file" (change)="onFileChange($event)" />
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Image Upload</label>
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="file"
+                (change)="onFileChange($event)"
+              />
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">creation date</label>
-              <div class="col-sm-10">
-                <input type="date" class="form-control" [(ngModel)]="newClub.date" name="date" />
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">creation date</label>
+            <div class="col-sm-10">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="newClub.date"
+                name="date"
+                required
+              />
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Description</label>
-              <div class="col-sm-10">
-                <textarea class="form-control" style="height: 100px" [(ngModel)]="newClub.description" name="description"></textarea>
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+              <textarea
+                class="form-control"
+                style="height: 100px"
+                [(ngModel)]="newClub.description"
+                name="description"
+                required
+              ></textarea>
             </div>
-            <div class="row mb-3">
-              <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-10">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="f.invalid"
+                
+              >
+                Submit
+              </button>
             </div>
-          </form>
-          <!-- End General Form Elements -->
-        </div>
+          </div>
+        </form>
+        <!-- End General Form Elements -->
       </div>
     </div>
-    <br />
-  
-    <!-- Section avec les cartes générées -->
-    <div class="row">
-      <div class="col-lg-3" *ngFor="let club of clubCards" (click)="navigateToClubProfile(club.id)">
-        <div class="card-club">
-          <img [src]="club.imageUrl || 'assets/images/para.png'" class="card-img-top" alt="Image du club" />
-          <div class="card-body">
-            <h5 class="card-title">{{ club.name }}</h5>
-            <p class="card-text">{{ club.date }}</p>
-            <p class="card-text">{{ club.description }}</p>
-          </div>
+  </div>
+  <br />
+
+  <!-- Section avec les cartes générées -->
+  <div class="row">
+    <div
+      class="col-lg-3"
+      *ngFor="let club of clubCards"
+      (click)="navigateToClubProfile(club.id)"
+    >
+      <div class="card-club">
+        <img
+          [src]="club.imageUrl || 'assets/images/para.png'"
+          class="card-img-top"
+          alt="Image du club"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ club.name }}</h5>
+          <p class="card-text">{{ club.date }}</p>
+          <p class="card-text">{{ club.description }}</p>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
