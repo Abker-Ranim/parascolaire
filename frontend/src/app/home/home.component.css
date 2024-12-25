@@ -148,3 +148,14 @@ textarea.form-control {
     color: #dc3545;
   }
 }
+.btn-danger {
+  padding: 0.25rem 0.5rem;
+  float: right;
+  i {
+    font-size: 0.875rem;
+  }
+  
+  &:hover {
+    background-color: #c82333; 
+  }
+}

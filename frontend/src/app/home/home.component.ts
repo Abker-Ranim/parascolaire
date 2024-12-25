@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +23,7 @@ export class HomeComponent implements OnInit {
   clubs: string[] = ['Club A', 'Club B', 'Club C'];
   userRole: string = ''; // Le rôle de l'utilisateur (admin, club, student, membre)
   @ViewChild('formContainer') formContainer!: ElementRef;
+  eventService: any;
   constructor(private router: Router, private spinner: NgxSpinnerService) {}
   // Nouveau événement
   newEvent = {
@@ -29,6 +36,7 @@ export class HomeComponent implements OnInit {
     clubOrganisateur: '',
     customOrganisateur: '',
     description: '',
+    createdAt: '',
   };
   // Liste des événements
   events: any[] = [];
@@ -63,8 +71,9 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmitEvent(): void {
-    this.spinner.show(); // Affiche le spinner au début
-  
+    this.spinner.show();
+    this.newEvent.createdAt = new Date().toISOString();
+
     // Simulez un délai pour tester le spinner
     setTimeout(() => {
       if (
@@ -80,11 +89,11 @@ export class HomeComponent implements OnInit {
         alert('Please fill in all required fields!');
         return;
       }
-  
+
       // Ajout de l'événement
       this.events.push({ ...this.newEvent });
       localStorage.setItem('events', JSON.stringify(this.events));
-  
+
       // Réinitialisation du formulaire
       this.newEvent = {
         nom: '',
@@ -96,16 +105,21 @@ export class HomeComponent implements OnInit {
         clubOrganisateur: '',
         customOrganisateur: '',
         description: '',
+        createdAt: '',
       };
       this.isOtherSelected = false;
       this.showForm = false;
-  
+
       this.spinner.hide(); // Cache le spinner après l'opération
     }, 500); // Simule un délai de 2 secondes pour les tests
   }
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
-    if (this.showForm && this.formContainer && !this.formContainer.nativeElement.contains(event.target as Node)) {
+    if (
+      this.showForm &&
+      this.formContainer &&
+      !this.formContainer.nativeElement.contains(event.target as Node)
+    ) {
       this.showForm = false;
     }
   }
@@ -119,5 +133,22 @@ export class HomeComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
+  }
+  deleteEvent(eventId: number) {
+    if (confirm('Are you sure you want to delete this event?')) {
+      // Call your service method to delete the event
+      this.eventService.deleteEvent(eventId).subscribe({
+        next: () => {
+          // Refresh events list
+          this.loadEvents();
+        },
+        error: (error: any) => {
+          console.error('Error deleting event:', error);
+        },
+      });
+    }
+  }
+  loadEvents() {
+    throw new Error('Method not implemented.');
   }
 }
