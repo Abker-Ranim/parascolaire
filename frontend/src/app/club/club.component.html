@@ -36,8 +36,14 @@
                 [(ngModel)]="newClub.name"
                 name="name"
                 required
+                ngModel
+                #n="ngModel"
               />
             </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="n.invalid && n.touched">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span>The name is a required field</span>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Email</label>
@@ -48,8 +54,14 @@
                 [(ngModel)]="newClub.email"
                 name="email"
                 required
+                ngModel
+                #e="ngModel"
               />
             </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="e.invalid && e.touched">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span>The email is a required field</span>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Password</label>
@@ -60,8 +72,14 @@
                 [(ngModel)]="newClub.password"
                 name="password"
                 required
+                ngModel
+                #p="ngModel"
               />
             </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="p.invalid && p.touched">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span>The password is a required field</span>
           </div>
           <div class="row mb-3">
             <label class="col-sm-2 col-form-label">Image Upload</label>
@@ -94,8 +112,14 @@
                 [(ngModel)]="newClub.description"
                 name="description"
                 required
+                ngModel
+                #d="ngModel"
               ></textarea>
             </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="d.invalid && d.touched">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span>Description is a required field</span>
           </div>
           <div class="row mb-3">
             <div class="col-sm-10">
@@ -103,7 +127,6 @@
                 type="submit"
                 class="btn btn-primary"
                 [disabled]="f.invalid"
-                
               >
                 Submit
               </button>
