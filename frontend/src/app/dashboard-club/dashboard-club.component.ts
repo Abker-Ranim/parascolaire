@@ -51,7 +51,7 @@ export class DashboardClubComponent implements AfterViewInit {
     const barChart = echarts.init(barChartDom);
     const barOption = {
       title: {
-        text: ' Evolution of number of students per month',
+        text: ' Evolution of number of members per month',
         left: 'center',
       },
       tooltip: {
@@ -116,10 +116,6 @@ export class DashboardClubComponent implements AfterViewInit {
     barChart.setOption(barOption);
   }
 
-  ngOnInit(): void {
-    this.renderEventsChart();
-  }
-
   renderEventsChart() {
     const ctx = document.getElementById('clubEventsChart') as HTMLCanvasElement;
     new Chart(ctx, {
@@ -164,5 +160,53 @@ export class DashboardClubComponent implements AfterViewInit {
         },
       },
     });
+  }
+
+  memberCount: number = 0;
+  memberPercentage: number = 0;
+  memberTrend: string = '';
+  eventCount: number = 0;
+  eventPercentage: number = 0;
+  eventTrend: string = '';
+  ExternaleventCount: number = 0;
+  ExternaleventPercentage: number = 0;
+  ExternaleventTrend: string = '';
+  InternaleventCount: number = 0;
+  InternaleventPercentage: number = 0;
+  InternaleventTrend: string = '';
+
+  ngOnInit() {
+    this.renderEventsChart();
+    this.fetchEventStats();
+    this.fetchmemberStats();
+    this.fetchInternaleventsStats();
+    this.fetchExternaleventsStats();
+  }
+
+  fetchEventStats() {
+    // Replace with your actual API call
+    this.eventCount = 157;
+    this.eventPercentage = 15;
+    this.eventTrend = this.eventPercentage > 0 ? 'increase' : 'decrease';
+  }
+  fetchmemberStats() {
+    // Replace with your actual API call
+    this.memberCount = 1575;
+    this.memberPercentage = -16;
+    this.memberTrend = this.memberPercentage > 0 ? 'increase' : 'decrease';
+  }
+  fetchInternaleventsStats() {
+    // Replace with your actual API call
+    this.InternaleventCount = 102;
+    this.InternaleventPercentage = -18;
+    this.InternaleventTrend =
+      this.InternaleventPercentage > 0 ? 'increase' : 'decrease';
+  }
+  fetchExternaleventsStats() {
+    // Replace with your actual API call
+    this.ExternaleventCount = 54;
+    this.ExternaleventPercentage = 27;
+    this.ExternaleventTrend =
+      this.ExternaleventPercentage > 0 ? 'increase' : 'decrease';
   }
 }
