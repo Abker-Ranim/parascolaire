@@ -148,12 +148,13 @@
     >
       <div class="card-club">
         <img
-          [src]="club.imageUrl || 'assets/images/para.png'"
+          [src]="club.imageUrl || 'assets/club.avif'"
           class="card-img-top"
           alt="Image du club"
         />
         <div class="card-body">
           <h5 class="card-title">{{ club.name }}</h5>
+          <h6 class="card-title">{{ club.email }}</h6>
           <p class="card-text">{{ club.date }}</p>
           <p class="card-text">{{ club.description }}</p>
         </div>
