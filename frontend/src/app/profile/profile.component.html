@@ -1,5 +1,4 @@
 <section class="section profile">
- 
   <div class="row">
     <div class="col-xl-4">
       <div class="card">
@@ -8,7 +7,7 @@
         >
           <img src="assets/para.jpg" alt="Profile" class="rounded-circle" />
           <h2>{{ user.name }}</h2>
-          
+
           <div class="social-links mt-2">
             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
             <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
@@ -16,8 +15,6 @@
           </div>
         </div>
       </div>
-     
-      
     </div>
 
     <div class="col-xl-8">
@@ -215,15 +212,69 @@
                   </button>
                 </div>
               </form>
-              <!-- End Profile Edit Form -->
             </div>
 
             <div class="tab-pane fade pt-3" id="profile-settings">
-              <button class="btn-add-new-club">Add</button>
+              <button class="btn-add-new-club" (click)="openModal()">
+                Add
+              </button>
+              <!-- Fenêtre modale -->
+              <div
+                class="modal"
+                tabindex="-1"
+                *ngIf="isModalOpen"
+                style="display: flex; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.5);"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Select Members</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        (click)="closeModal()"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <ul class="list-group">
+                        <li
+                          *ngFor="let student of students"
+                          class="list-group-item"
+                        >
+                          <input
+                            type="checkbox"
+                            [checked]="student.selected"
+                            (change)="toggleSelection(student)"
+                          />
+                          {{ student.Firstname }} -{{ student.Lastname }}-
+                          {{ student.phone }} - {{ student.email }}-{{
+                            student.Birthday
+                          }}
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="closeModal()"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        class="btn-add-new-club" 
+                        (click)="addSelectedStudents()"
+                      >
+                        Add Selected
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br /> <br />
 
-              <br /><br />
-
-              <!-- Profile Settings Content -->
+              <!--Member -->
               <section class="section">
                 <div class="row">
                   <div class="col-lg-12">
@@ -232,45 +283,36 @@
                       <table class="table datatable">
                         <thead>
                           <tr>
-                            <th><b>Name</b></th>
-                            <th>Phone</th>
-                            <th>E-mail</th>
-                            <th>Start Date</th>
-                            <th>Role<th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>phone</th>
+                            <th>email</th>
+                            <th>Birthday</th>
+                            <th>Role</th>
+                            <th></th>
                             <th></th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Unity Pugh</td>
-                            <td>9958</td>
-                            <td>Curicó</td>
-                            <td>2005/02/11</td>
-                            <td>role</td>
+                          <tr></tr>
+                          <tr *ngFor="let student of addedStudents">
+                            <td>{{ student.Firstname }}</td>
+                            <td>{{ student.Lastname }}</td>
+                            <td>{{ student.phone }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.Birthday }}</td>
+                            
                             <td>
-                              <button class="btn btn-danger btn-sm">
-                                <i class="bi bi-trash"></i>
-                              </button>
-                              <button class="btn btn-warning btn-sm">
-                                <i class="bi bi-pencil"></i>
-                                <!-- Icône de modification -->
-                              </button>
+                              <select [(ngModel)]="student.role" (change)="changeRole(student, student.role)">
+                                <option value="admin">Admin</option>
+                                <option value="student">Member</option>
+                              </select>
                             </td>
-                          </tr>
-                          <tr>
-                            <td>Theodore Duran</td>
-                            <td>8971</td>
-                            <td>Dhanbad</td>
-                            <td>1999/04/07</td>
-                            <td>role</td>
                             <td>
                               <button class="btn btn-danger btn-sm">
                                 <i class="bi bi-trash"></i>
                               </button>
-                              <button class="btn btn-warning btn-sm">
-                                <i class="bi bi-pencil"></i>
-                                <!-- Icône de modification -->
-                              </button>
+                              
                             </td>
                           </tr>
                         </tbody>
@@ -288,8 +330,3 @@
     </div>
   </div>
 </section>
-
-
-
-
-

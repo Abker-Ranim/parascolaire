@@ -31,7 +31,8 @@ Chart.register(
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
-export class ProfileComponent  {
+export class ProfileComponent {
+  isModalOpen: boolean | undefined;
   constructor(private router: Router, private route: ActivatedRoute) {}
   onReturnClick(): void {
     this.router.navigate(['club']);
@@ -46,15 +47,13 @@ export class ProfileComponent  {
     instagram: 'kevin_insta',
     linkedin: 'kevin_linkedin',
     creationDate: '2022/06/01',
-    imageUrl:''
+    imageUrl: '',
   };
 
   onSaveChanges() {
-    // Sauvegarder les changements ici
-
-    // Après avoir sauvegardé les changements, revenir à l'onglet Overview
     this.activateTab('profile-overview');
-  }onFileChange(event: any) {
+  }
+  onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -65,10 +64,99 @@ export class ProfileComponent  {
     }
   }
 
-  activateTab(tabId: string) {
-    // Cette méthode peut être utilisée pour activer le bon onglet via la classe CSS ou autre logique
-    // Par exemple, en utilisant un ViewChild et une méthode de gestion des onglets si vous êtes sur Angular
-  }
+  activateTab(tabId: string) {}
  
+  changeRole(student: any, newRole: string) {
+    student.role = newRole;
+  }
+  // Liste statique des étudiants
+  students = [
+    {
+      Firstname: 'Alice ',
+      Lastname: 'Smith',
+      phone: '123456789',
+      email: 'alice@example.com',
+     Birthday: '2005/02/11',
+    role:'Admin',
+      selected: false,
+    },
+    {
+      Firstname: 'Alice ',
+      Lastname: 'Smith',
+      phone: '123456789',
+      email: 'alice@example.com',
+     Birthday: '2005/02/11',
+    role:'Admin',
+      selected: false,
+    },
+    {
+      Firstname: 'Alice ',
+      Lastname: 'Smith',
+      phone: '123456789',
+      email: 'alice@example.com',
+     Birthday: '2005/02/11',
+    role:'Admin',
+      selected: false,
+    },
+    {
+      Firstname: 'Alice ',
+      Lastname: 'Smith',
+      phone: '123456789',
+      email: 'alice@example.com',
+     Birthday: '2005/02/11',
+    role:'Admin',
+      selected: false,
+    },
+    {
+      Firstname: 'Alice ',
+      Lastname: 'Smith',
+      phone: '123456789',
+      email: 'alice@example.com',
+     Birthday: '2005/02/11',
+    role:'Admin',
+      selected: false,
+    },
+    {
+      Firstname: 'Alice ',
+      Lastname: 'Smith',
+      phone: '123456789',
+      email: 'alice@example.com',
+     Birthday: '2005/02/11',
+    role:'Admin',
+      selected: false,
+    },
+    
+  ];
 
+  // Liste dynamique des étudiants ajoutés
+  addedStudents: {
+    Firstname: string;
+    Lastname: string;
+    phone: string;
+   Birthday: string;  
+    email: string;
+    role:string
+  }[] = [];
+
+  // Ouvrir la modale
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  // Fermer la modale
+  closeModal() {
+    this.isModalOpen = false;
+  }
+  // Gérer la sélection d’un étudiant
+  toggleSelection(student: any) {
+    student.selected = !student.selected;
+  }
+
+  // Ajouter les étudiants sélectionnés
+  addSelectedStudents() {
+    const selectedStudents = this.students.filter((s) => s.selected);
+    this.addedStudents.push(...selectedStudents);
+    this.students.forEach((s) => (s.selected = false)); // Réinitialiser les sélections
+    this.closeModal();
+  }
 }
