@@ -39,22 +39,22 @@ export class HomeComponent implements OnInit {
     createdAt: '',
   };
   // Liste des événements
-  events: any[] = [];
+  Events: any[] = [];
 
   // Variables pour contrôler l'état du formulaire
   showForm = false;
   isOtherSelected = false;
   // spinner: any;
   sortEvents(): void {
-    this.events.sort((a, b) => {
+    this.Events.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     });
   }
   ngOnInit(): void {
     this.userRole = localStorage.getItem('userRole') || 'membre';
-    const savedEvents = localStorage.getItem('events');
+    const savedEvents = localStorage.getItem('Events');
     if (savedEvents) {
-      this.events = JSON.parse(savedEvents);
+      this.Events = JSON.parse(savedEvents);
       this.sortEvents();
     }
   }
@@ -96,9 +96,9 @@ export class HomeComponent implements OnInit {
       }
 
       const eventId = new Date().getTime();
-      this.events.push({ ...this.newEvent, id: eventId });
+      this.Events.push({ ...this.newEvent, id: eventId });
       this.sortEvents();
-      localStorage.setItem('events', JSON.stringify(this.events));
+      localStorage.setItem('Events', JSON.stringify(this.Events));
 
       // Réinitialisation du formulaire
       this.newEvent = {
