@@ -167,3 +167,6 @@ textarea.form-control {
     height: 100%;
   }
 }
+.favorited {
+  color: gold; /* Change la couleur de l'étoile lorsqu'elle est sélectionnée */
+}

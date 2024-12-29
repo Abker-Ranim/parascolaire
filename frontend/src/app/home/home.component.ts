@@ -95,8 +95,8 @@ export class HomeComponent implements OnInit {
         return;
       }
 
-      // Ajout de l'événement
-      this.events.push({ ...this.newEvent });
+      const eventId = new Date().getTime();
+      this.events.push({ ...this.newEvent, id: eventId });
       this.sortEvents();
       localStorage.setItem('events', JSON.stringify(this.events));
 
@@ -116,8 +116,8 @@ export class HomeComponent implements OnInit {
       this.isOtherSelected = false;
       this.showForm = false;
 
-      this.spinner.hide(); // Cache le spinner après l'opération
-    }, 500); // Simule un délai de 2 secondes pour les tests
+      this.spinner.hide(); 
+    }, 500); 
   }
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
@@ -142,10 +142,8 @@ export class HomeComponent implements OnInit {
   }
   deleteEvent(eventId: number) {
     if (confirm('Are you sure you want to delete this event?')) {
-      // Call your service method to delete the event
       this.eventService.deleteEvent(eventId).subscribe({
         next: () => {
-          // Refresh events list
           this.loadEvents();
         },
         error: (error: any) => {
@@ -156,5 +154,11 @@ export class HomeComponent implements OnInit {
   }
   loadEvents() {
     throw new Error('Method not implemented.');
+  }
+
+  favorites: { [key: number]: boolean } = {};
+
+  favoriteEvent(eventId: number): void {
+    this.favorites[eventId] = !this.favorites[eventId];
   }
 }
