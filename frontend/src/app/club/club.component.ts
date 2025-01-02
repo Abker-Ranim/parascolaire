@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import de CommonModule
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @Component({
   selector: 'app-clubs',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Assurez-vous d'importer CommonModule
+  imports: [CommonModule, FormsModule, NgxSpinnerModule], // Assurez-vous d'importer CommonModule
   templateUrl: './club.component.html',
   styleUrls: ['./club.component.css'],
 })
@@ -18,13 +19,15 @@ export class ClubComponent implements OnInit {
   newClub = {
     name: '',
     email: '',
+    password: '',
     date: '',
     description: '',
     imageUrl: '',
   };
   selectedClub: any; // Variable pour stocker les informations du club sélectionné
+  @ViewChild('formContainer') formContainer: ElementRef | undefined;
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.userRole = localStorage.getItem('userRole') || 'membre';
@@ -46,37 +49,51 @@ export class ClubComponent implements OnInit {
   toggleForm() {
     this.showForm = !this.showForm;
   }
-
+  closeFormOnOutsideClick(event: MouseEvent) {
+    // Vérifiez si l'événement vient de l'extérieur
+    this.showForm = false;
+  }
   onSubmit() {
     // Vérifier que tous les champs obligatoires sont remplis
-    if (
-      !this.newClub.name ||
-      !this.newClub.email ||
-      !this.newClub.date ||
-      !this.newClub.description
-    ) {
-      alert('Please fill in all required fields!');
-      return;
-    }
-
-    // Ajout de la nouvelle carte au tableau des cartes de club
-    const newClubWithId = { ...this.newClub, id: Date.now() }; // Utiliser Date.now() pour générer un ID unique
-    this.clubCards.push(newClubWithId);
-
-    // Sauvegarder les cartes dans le LocalStorage
-    localStorage.setItem('clubCards', JSON.stringify(this.clubCards));
-
-    // Réinitialisation du formulaire
-    this.newClub = {
-      name: '',
-      email: '',
-      date: '',
-      description: '',
-      imageUrl: '',
-    };
-    this.showForm = false; // Ferme le formulaire après la soumission
+    this.spinner.show();
+    setTimeout(() => {
+      if (
+        !this.newClub.name ||
+        !this.newClub.email ||
+        !this.newClub.password ||
+        !this.newClub.date ||
+        !this.newClub.description
+      ) {
+        alert('Please fill in all required fields!');
+        return;
+      }
+  
+      // Ajout de la nouvelle carte au tableau des cartes de club
+      const newClubWithId = { ...this.newClub, id: Date.now() }; // Utiliser Date.now() pour générer un ID unique
+      this.clubCards.push(newClubWithId);
+  
+      // Sauvegarder les cartes dans le LocalStorage
+      localStorage.setItem('clubCards', JSON.stringify(this.clubCards));
+  
+      // Réinitialisation du formulaire
+      this.newClub = {
+        name: '',
+        email: '',
+        password: '',
+        date: '',
+        description: '',
+        imageUrl: '',
+      };
+      this.showForm = false;
+      this.spinner.hide(); // Ferme le formulaire après la soumission
+    },500);
   }
-
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showForm && this.formContainer && !this.formContainer.nativeElement.contains(event.target)) {
+      this.showForm = false;
+    }
+  }
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -90,7 +107,6 @@ export class ClubComponent implements OnInit {
 
   // Méthode pour naviguer vers la page de profil d'un club lorsqu'on clique sur une carte
   navigateToClubProfile(clubId: number) {
-
     this.router.navigate([`/${this.userRole}/club/${clubId}`]);
   }
 }

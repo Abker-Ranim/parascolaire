@@ -68,7 +68,6 @@ textarea.form-control {
   font-weight: 600;
   text-align: center;
   cursor: pointer;
-  padding: 10px 20px;
 }
 
 .btn-primary {
@@ -114,7 +113,7 @@ table {
 table th,
 table td {
   padding: 12px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
@@ -180,11 +179,11 @@ table tr:hover {
 }
 
 .badge-success {
-  background-color: #6ef673; /* Couleur verte pour "Accepté" */
+  background-color: #0aa70f; /* Couleur verte pour "Accepté" */
 }
 
 .badge-danger {
-  background-color: #ff6b6b; /* Couleur rouge pour "Rejeté" */
+  background-color: #f93f3f; /* Couleur rouge pour "Rejeté" */
 }
 
 .fas {
@@ -197,4 +196,7 @@ table tr:hover {
   transition: transform 0.3s ease-in-out; /* Transition douce */
 }
 
-
+.buttons {
+  gap: 30px;
+  text-align: center;
+}

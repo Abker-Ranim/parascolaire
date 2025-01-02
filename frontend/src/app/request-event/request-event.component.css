@@ -68,7 +68,6 @@ body {
     font-weight: 600;
     text-align: center;
     cursor: pointer;
-    padding: 10px 20px;
   }
   
   .btn-primary {
@@ -113,7 +112,7 @@ body {
   
   table th, table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ddd;
   }
   
@@ -179,11 +178,11 @@ body {
   }
   
   .badge-success {
-    background-color: #6ef673; /* Couleur verte pour "Accepté" */
+    background-color: #0aa70f; /* Couleur verte pour "Accepté" */
   }
   
   .badge-danger {
-    background-color: #ff6b6b;/* Couleur rouge pour "Rejeté" */
+    background-color: #f93f3f;/* Couleur rouge pour "Rejeté" */
   }
   
   .fas {
@@ -195,4 +194,7 @@ body {
     transform: scale(1.2); /* Effet de zoom lors du survol de l'icône */
     transition: transform 0.3s ease-in-out; /* Transition douce */
   }
-  
+  .buttons {
+    gap: 30px;
+    text-align: center;
+  }

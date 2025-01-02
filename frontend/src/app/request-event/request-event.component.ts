@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -28,6 +28,7 @@ export class RequestEventComponent implements OnInit {
   showForm = false; // Control form visibility
   formClicked = false; // Control form visibility
   eventService: any;
+  @ViewChild('formContainer') formContainer!: ElementRef;
 
   ngOnInit(): void {
     // Récupérer tous les événements du localStorage
@@ -44,15 +45,9 @@ export class RequestEventComponent implements OnInit {
     this.showForm = !this.showForm;
   }
 
-  closeForm(): void {
-    if (!this.formClicked) {
-      this.showForm = false;
-      this.formClicked = false;
-    }
-  }
-
-  toggleFormClick(): void {
-    this.formClicked = true;
+  closeFormOnOutsideClick(event: MouseEvent) {
+    // Vérifiez si l'événement vient de l'extérieur
+    this.showForm = false;
   }
 
   onSubmitEvent(): void {
@@ -135,5 +130,11 @@ export class RequestEventComponent implements OnInit {
         // Gérez l'erreur de manière appropriée (par exemple, afficher un message d'erreur)
       }
     );
+  }
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showForm && this.formContainer && this.formContainer.nativeElement && !this.formContainer.nativeElement.contains(event.target)) {
+      this.showForm = false;
+    }
   }
 }

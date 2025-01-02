@@ -9,32 +9,32 @@
         <span>Home</span>
       </a>
     </li>
-
+ <!-- Liens visibles uniquement pour club -->
+ <li class="nav-item" *ngIf="userRole === 'club'">
+  <a
+    class="nav-link collapsed"
+    routerLink="profile"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-journal-text"></i><span>Profile</span>
+  </a>
+</li>
+<li class="nav-item" *ngIf="userRole === 'club'">
+  <a
+    class="nav-link collapsed"
+    routerLink="dashboardClub"
+    routerLinkActive="active"
+  >
+    <i class="bi bi-bar-chart"></i><span>Dashboard</span>
+  </a>
+</li>
     <li class="nav-item">
       <a class="nav-link collapsed" routerLink="club" routerLinkActive="active">
         <i class="bi bi-menu-button-wide"></i><span>Clubs</span>
       </a>
     </li>
 
-    <!-- Lien "Request Event" visible uniquement pour Admin et Club -->
-    <li class="nav-item" *ngIf="userRole === 'admin' || userRole === 'club'">
-      <a
-        class="nav-link collapsed"
-        routerLink="RequestEvent"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-bar-chart"></i><span>Request an Event</span>
-      </a>
-    </li>
-    <li class="nav-item" *ngIf="userRole === 'admin' || userRole === 'club'">
-      <a
-        class="nav-link collapsed"
-        routerLink="RequestClassroom"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-bar-chart"></i><span>Request a Classroom</span>
-      </a>
-    </li>
+   
 
     <!-- Liens visibles uniquement pour Admin -->
     <li class="nav-item" *ngIf="userRole === 'admin'">
@@ -65,23 +65,23 @@
         <i class="bi bi-bar-chart"></i><span>Dashboard</span>
       </a>
     </li>
-    <!-- Liens visibles uniquement pour club -->
-    <li class="nav-item" *ngIf="userRole === 'club'">
+    <!-- Lien "Request Event" visible uniquement pour Admin et Club -->
+    <li class="nav-item" *ngIf="userRole === 'admin' || userRole === 'club'">
       <a
         class="nav-link collapsed"
-        routerLink="profile"
+        routerLink="RequestEvent"
         routerLinkActive="active"
       >
-        <i class="bi bi-journal-text"></i><span>Profile</span>
+      <i class="bi bi-calendar-plus"></i><span>Request an Event</span>
       </a>
     </li>
-    <li class="nav-item" *ngIf="userRole === 'club'">
+    <li class="nav-item" *ngIf="userRole === 'admin' || userRole === 'club'">
       <a
         class="nav-link collapsed"
-        routerLink="dashboardClub"
+        routerLink="RequestClassroom"
         routerLinkActive="active"
       >
-        <i class="bi bi-bar-chart"></i><span>Dashboard</span>
+      <i class="bi bi-calendar-plus"></i><span>Request a Classroom</span>
       </a>
     </li>
   </ul>

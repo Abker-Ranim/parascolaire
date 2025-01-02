@@ -14,8 +14,7 @@ export class DashboardClubComponent implements AfterViewInit {
     const pieChart = echarts.init(pieChartDom);
     const pieOption = {
       title: {
-        text: 'classification by gender',
-        // subtext: 'Fake Data',
+        text: 'Classification by gender',
         left: 'center',
       },
       tooltip: {
@@ -52,37 +51,69 @@ export class DashboardClubComponent implements AfterViewInit {
     const barChart = echarts.init(barChartDom);
     const barOption = {
       title: {
-        text: 'club classification by number of events',
+        text: ' Evolution of number of members per month',
         left: 'center',
       },
       tooltip: {
         trigger: 'axis',
       },
+      legend: {
+        data: ['Bar Chart'],
+        top: '10%',
+      },
       xAxis: {
         type: 'category',
-        data: ['clubA', 'clubB', 'clubC', 'clubD'],
+        data: [
+          'Jan',
+          'Feb',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ],
+        axisLabel: {
+          interval: 0,
+        },
       },
       yAxis: {
         type: 'value',
+        title: {
+          text: 'Values',
+        },
       },
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
           type: 'bar',
-          color: '#320285',
+          data: [65, 59, 80, 81, 56, 55, 40, 22, 10, 56, 10, 80],
+          itemStyle: {
+            color: (params: any) => {
+              const colors = [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(64, 255, 201, 0.2)',
+                'rgba(255, 86, 168, 0.2)',
+                'rgba(88, 80, 251, 0.2)',
+                'rgba(255, 182, 86, 0.2)',
+              ];
+              return colors[params.dataIndex];
+            },
+          },
         },
       ],
     };
     barChart.setOption(barOption);
-    
-  
-  }
-
-  ngOnInit(): void {
-    this.renderEventsChart();
-    this.renderNewMembersChart();
-    this.renderGenderSectorChart();
-    this.renderMemberGrowthChart();
   }
 
   renderEventsChart() {
@@ -92,21 +123,21 @@ export class DashboardClubComponent implements AfterViewInit {
       data: {
         labels: [
           'Jan',
-          'Fév',
-          'Mar',
-          'Avr',
-          'Mai',
-          'Juin',
-          'Juil',
-          'Août',
+          'Feb',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
           'Sep',
           'Oct',
           'Nov',
-          'Déc',
+          'Dec',
         ],
         datasets: [
           {
-            label: "Nombre d'Événements de Club",
+            label: 'number of events',
             data: [10, 20, 30, 25, 15, 40, 60, 55, 35, 45, 30, 50],
             borderColor: 'rgba(54, 162, 235, 1)',
             backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -120,154 +151,62 @@ export class DashboardClubComponent implements AfterViewInit {
         plugins: {
           title: {
             display: true,
-            text: 'Évolution des Événements de Club par Mois',
+            text: 'Evolution of number of event per month',
           },
           legend: { display: true, position: 'bottom' },
         },
         scales: {
-          x: { title: { display: true, text: 'Mois' } },
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: "Nombre d'Événements" },
-          },
+          x: { title: { display: true, text: 'month' } },
         },
       },
     });
   }
 
-  renderNewMembersChart() {
-    const ctx = document.getElementById('newMembersChart') as HTMLCanvasElement;
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: [
-          'Jan',
-          'Fév',
-          'Mar',
-          'Avr',
-          'Mai',
-          'Juin',
-          'Juil',
-          'Août',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Déc',
-        ],
-        datasets: [
-          {
-            label: 'Nouveaux Membres',
-            data: [15, 23, 30, 22, 28, 35, 40, 50, 45, 38, 25, 20],
-            backgroundColor: '#4CAF50',
-            borderColor: '#388E3C',
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: { display: true, text: 'Nouveaux Membres par Mois' },
-          legend: { display: true },
-        },
-        scales: { y: { beginAtZero: true } },
-      },
-    });
+  memberCount: number = 0;
+  memberPercentage: number = 0;
+  memberTrend: string = '';
+  eventCount: number = 0;
+  eventPercentage: number = 0;
+  eventTrend: string = '';
+  ExternaleventCount: number = 0;
+  ExternaleventPercentage: number = 0;
+  ExternaleventTrend: string = '';
+  InternaleventCount: number = 0;
+  InternaleventPercentage: number = 0;
+  InternaleventTrend: string = '';
+
+  ngOnInit() {
+    this.renderEventsChart();
+    this.fetchEventStats();
+    this.fetchmemberStats();
+    this.fetchInternaleventsStats();
+    this.fetchExternaleventsStats();
   }
 
-  renderGenderSectorChart() {
-    const ctx = document.getElementById(
-      'genderSectorChart'
-    ) as HTMLCanvasElement;
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: [
-          'Informatique',
-          'Finance',
-          'Santé',
-          'Éducation',
-          'Sport',
-          'Arts',
-        ],
-        datasets: [
-          {
-            label: 'Hommes',
-            data: [20, 30, 25, 35, 15, 18],
-            backgroundColor: '#1E88E5',
-          },
-          {
-            label: 'Femmes',
-            data: [25, 20, 30, 40, 20, 25],
-            backgroundColor: '#E91E63',
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: "Répartition des sexes par Secteur d'Activité",
-          },
-          legend: { display: true, position: 'top' },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: 'Nombre de Membres' },
-          },
-        },
-      },
-    });
+  fetchEventStats() {
+    // Replace with your actual API call
+    this.eventCount = 157;
+    this.eventPercentage = 15;
+    this.eventTrend = this.eventPercentage > 0 ? 'increase' : 'decrease';
   }
-  renderMemberGrowthChart() {
-    const ctx = document.getElementById('memberGrowthChart') as HTMLCanvasElement;
-    new Chart(ctx, {
-      type: 'line', // Type du graphique (ici un graphique linéaire)
-      data: {
-        labels: [
-          'Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'
-        ], // Mois de l'année
-        datasets: [
-          {
-            label: "Membres entrants",
-            data: [15, 23, 30, 22, 28, 35, 40, 50, 45, 38, 25, 20], // Données sur les nouveaux membres entrants chaque mois
-            borderColor: 'rgba(54, 162, 235, 1)', // Couleur de la ligne
-            backgroundColor: 'rgba(54, 162, 235, 0.2)', // Couleur de fond sous la ligne
-            tension: 0.4, // Courbure de la ligne
-            fill: true, // Remplir sous la courbe
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          title: {
-            display: true,
-            text: 'Évolution des Membres Entrants par Mois', // Titre du graphique
-          },
-          legend: {
-            display: true,
-            position: 'bottom', // Position de la légende
-          },
-        },
-        scales: {
-          x: {
-            title: {
-              display: true,
-              text: 'Mois', // Titre pour l'axe X
-            },
-          },
-          y: {
-            beginAtZero: true, // Commence à zéro sur l'axe Y
-            title: {
-              display: true,
-              text: "Nombre de Membres", // Titre pour l'axe Y
-            },
-          },
-        },
-      },
-    });
+  fetchmemberStats() {
+    // Replace with your actual API call
+    this.memberCount = 1575;
+    this.memberPercentage = -16;
+    this.memberTrend = this.memberPercentage > 0 ? 'increase' : 'decrease';
+  }
+  fetchInternaleventsStats() {
+    // Replace with your actual API call
+    this.InternaleventCount = 102;
+    this.InternaleventPercentage = -18;
+    this.InternaleventTrend =
+      this.InternaleventPercentage > 0 ? 'increase' : 'decrease';
+  }
+  fetchExternaleventsStats() {
+    // Replace with your actual API call
+    this.ExternaleventCount = 54;
+    this.ExternaleventPercentage = 27;
+    this.ExternaleventTrend =
+      this.ExternaleventPercentage > 0 ? 'increase' : 'decrease';
   }
 }

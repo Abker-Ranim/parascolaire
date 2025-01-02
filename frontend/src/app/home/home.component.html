@@ -1,36 +1,55 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <div>
-    <div>
-      <button class="btn-add-new-club" (click)="toggleForm()" *ngIf="userRole === 'admin'">Add New Event</button>
-    </div>
-    <br>
-    <br>
-    
-    <div *ngIf="showForm" class="modal" >
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Add New Event</h5>
-  
-          <!-- Formulaire -->
-          <form (ngSubmit)="onSubmitEvent()">
-            <!-- Champ Nom -->
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Name</label>
-              <div class="col-sm-10">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="newEvent.nom"
-                  name="nom"
-                  required
-                />
-              </div>
+  <div>
+    <button
+      class="btn-add-new-club"
+      (click)="toggleForm()"
+      *ngIf="userRole === 'admin'"
+    >
+      Add New Event
+    </button>
+  </div>
+  <br />
+  <br />
+
+  <div *ngIf="showForm" class="modal" (click)="closeFormOnOutsideClick($event)">
+    <div class="card" (click)="$event.stopPropagation()">
+      <div class="card-body">
+        <h5 class="card-title">Add New Event</h5>
+
+        <!-- Formulaire -->
+        <form #f="ngForm" (ngSubmit)="onSubmitEvent()">
+          <!-- Champ Nom -->
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="newEvent.nom"
+                name="nom"
+                required
+                ngModel
+                #n="ngModel"
+              />
             </div>
-  
-            <!-- Champ Date Début -->
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Start date</label>
-              <div class="col-sm-10">
-                <input
+          </div>
+          <div class="alert alert-danger" *ngIf="n.invalid && n.touched">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span>The name is a required field</span>
+          </div>
+          <!-- Champ Date Début -->
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Start date</label>
+            <div class="col-sm-10">
+              <input
                 type="date"
                 class="form-control mb-2"
                 [(ngModel)]="newEvent.dateDebut"
@@ -45,14 +64,13 @@
                 required
               />
             </div>
-            
-            </div>
-  
-            <!-- Champ Date Fin -->
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">End date</label>
-              <div class="col-sm-10">
-                <input
+          </div>
+
+          <!-- Champ Date Fin -->
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">End date</label>
+            <div class="col-sm-10">
+              <input
                 type="date"
                 class="form-control mb-2"
                 [(ngModel)]="newEvent.dateFin"
@@ -66,86 +84,137 @@
                 name="heureFin"
                 required
               />
-              </div>
             </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Image Upload</label>
-              <div class="col-sm-10">
-                <input class="form-control" type="file" (change)="onFileChange($event)" />
-              </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Image Upload</label>
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="file"
+                (change)="onFileChange($event)"
+              />
             </div>
-  
-            <!-- Champ Club Organisateur -->
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Organizers</label>
-              <div class="col-sm-10">
-                <!-- Sélection d'un club ou "Autre" -->
-                <select
-                  class="form-control mb-2"
-                  [(ngModel)]="newEvent.clubOrganisateur"
-                  name="clubOrganisateur"
-                  (change)="checkIfOtherSelected($event)"
-                >
-                  <option *ngFor="let club of clubs" [value]="club">{{ club }}</option>
-                  <option [value]="'Autre'">Autre</option>
-                </select>
-  
-                <!-- Champ pour écrire le nom si "Autre" -->
-                <input
-                  *ngIf="isOtherSelected"
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="newEvent.customOrganisateur"
-                  placeholder="Nom de l'organisateur"
-                  name="customOrganisateur"
-                  required
-                />
-              </div>
+          </div>
+
+          <!-- Champ Club Organisateur -->
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Organizers</label>
+            <div class="col-sm-10">
+              <!-- Sélection d'un club ou "Autre" -->
+              <select
+                class="form-control mb-2"
+                [(ngModel)]="newEvent.clubOrganisateur"
+                name="clubOrganisateur"
+                (change)="checkIfOtherSelected($event)"
+                required
+              >
+                <option *ngFor="let club of clubs" [value]="club">
+                  {{ club }}
+                </option>
+                <option [value]="'Autre'">Autre</option>
+              </select>
+
+              <!-- Champ pour écrire le nom si "Autre" -->
+              <input
+                *ngIf="isOtherSelected"
+                type="text"
+                class="form-control"
+                [(ngModel)]="newEvent.customOrganisateur"
+                placeholder="Nom de l'organisateur"
+                name="customOrganisateur"
+                required
+              />
             </div>
-  
-            <!-- Champ Description -->
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Description</label>
-              <div class="col-sm-10">
-                <textarea
-                  class="form-control"
-                  [(ngModel)]="newEvent.description"
-                  name="description"
-                  rows="4"
-                  placeholder="Entrez une description pour l'événement"
-                ></textarea>
-              </div>
+          </div>
+
+          <!-- Champ Description -->
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-10">
+              <textarea
+                class="form-control"
+                [(ngModel)]="newEvent.description"
+                name="description"
+                rows="4"
+                placeholder="Entrez une description pour l'événement"
+                required
+                ngModel
+                #e="ngModel"
+              ></textarea>
             </div>
-  
-            <!-- Bouton Submit -->
-            <div class="row mb-3">
-              <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="e.invalid && e.touched">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span> Description is a required field</span>
+          </div>
+          <!-- Bouton Submit -->
+          <div class="row mb-3">
+            <div class="col-sm-10">
+              <button
+                [disabled]="f.invalid"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Submit
+              </button>
             </div>
-          </form>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Affichage des événements -->
+<div *ngFor="let event of Events" class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img
+        [src]="event.imageUrl || 'assets/event.avif'"
+        class="img-fluid rounded-start"
+        alt="Event Image"
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ event.nom }}</h5>
+        <p class="card-text">
+          <strong>Date Début:</strong> {{ event.dateDebut }}
+          {{ event.heureDebut }} <br />
+          <strong>Date Fin:</strong> {{ event.dateFin }} {{ event.heureFin }}
+          <br />
+          <strong>Organizers:</strong>
+          {{
+            event.clubOrganisateur || event.customOrganisateur || "Non spécifié"
+          }}
+          <br />
+          <strong>Description:</strong>
+          {{ event.description || "Pas de description." }}
+        </p>
+        <div class="d-flex justify-content-between align-items-center">
+          <small class="text-muted">
+            <i class="far fa-clock me-1"></i>
+            Added on: {{ event.createdAt | date : "medium" }}
+          </small>
+          <button
+            *ngIf="userRole === 'admin'"
+            class="btn btn-danger btn-sm"
+            (click)="deleteEvent(event.id)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <button
+          *ngIf="userRole === 'membre'|| userRole === 'student'"
+          (click)="favoriteEvent(event.id)"
+          style="border: none; background: transparent; padding: 0;"
+        >
+          <i class="far fa-star"
+          [class.favorited]="favorites[event.id]"></i>
+        </button>
+        
         </div>
       </div>
     </div>
   </div>
-  
-  <!-- Affichage des événements -->
-  <div *ngFor="let event of events" class="card mb-3">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img [src]="event.imageUrl || 'assets/images/para.jpg'" class="img-fluid rounded-start" alt="Event Image" />
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">{{ event.nom }}</h5>
-          <p class="card-text">
-            <strong>Date Début:</strong> {{ event.dateDebut }} {{ event.heureDebut }} <br />
-          <strong>Date Fin:</strong> {{ event.dateFin }} {{ event.heureFin }} <br />
-            <strong>Organizers:</strong> {{ event.clubOrganisateur || event.customOrganisateur || 'Non spécifié' }} <br />
-            <strong>Description:</strong> {{ event.description || 'Pas de description.' }}
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+</div>

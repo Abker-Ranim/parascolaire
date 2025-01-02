@@ -15,29 +15,22 @@ export class ClubProfileComponent {
   onReturnClick(): void {
     this.router.navigate([`/${this.userRole}/club`]);
   }
-  user = {
-    name: 'Kevin Anderson',
-    role: 'UI Designer',
-    about: 'A passionate UI designer.',
+  club = {
+    name: 'club',
+    description: 'club club',
     phone: '123456789',
-    email: 'kevin@example.com',
-    facebook: 'kevin_fb',
-    instagram: 'kevin_insta',
-    linkedin: 'kevin_linkedin',
+    email: 'club@example.com',
+    facebook: 'club',
+    instagram: 'club',
+    linkedin: 'club',
     creationDate: '2022/06/01',
   };
 
   onSaveChanges() {
-    // Sauvegarder les changements ici
-
-    // Après avoir sauvegardé les changements, revenir à l'onglet Overview
     this.activateTab('profile-overview');
   }
 
-  activateTab(tabId: string) {
-    // Cette méthode peut être utilisée pour activer le bon onglet via la classe CSS ou autre logique
-    // Par exemple, en utilisant un ViewChild et une méthode de gestion des onglets si vous êtes sur Angular
-  }
+  activateTab(tabId: string) {}
   userRole: string = ''; // Le rôle de l'utilisateur (admin, club, student, membre)
 
   ngOnInit(): void {

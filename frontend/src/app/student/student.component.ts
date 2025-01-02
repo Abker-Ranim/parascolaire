@@ -1,56 +1,121 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatTableDataSource,
+  MatTableModule,
+  MatTable,
+} from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    NgxSpinnerModule,
+    MatSortModule,
+  ],
   templateUrl: './student.component.html',
-  styleUrls: ['./student.component.css']
+  styleUrls: ['./student.component.css'],
 })
-export class StudentComponent implements OnInit {
+export class StudentComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table!: MatTable<any>;
+
+  @ViewChild('formContainer', { static: false }) formContainer!: ElementRef;
+
   showForm = false;
-  listStudent: any[] = []; // Liste des étudiants
+  listStudent: any[] = [];
   newStudent = {
     firstname: '',
     lastname: '',
     email: '',
     password: '',
-    birthday: ''
+    birthday: '',
   };
+  displayedColumns: string[] = ['firstname', 'lastname', 'email', 'birthday'];
+  dataSource = new MatTableDataSource<any>(this.listStudent);
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit() {
-    // Chargement des étudiants depuis localStorage s'ils existent
     const savedStudents = localStorage.getItem('listStudent');
     if (savedStudents) {
       this.listStudent = JSON.parse(savedStudents);
+      this.dataSource.data = this.listStudent;
     }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   toggleForm() {
-    this.showForm = !this.showForm; // Afficher/Masquer le formulaire
+    this.showForm = !this.showForm;
+  }
+  closeFormOnOutsideClick(event: MouseEvent) {
+    // Vérifiez si l'événement vient de l'extérieur
+    this.showForm = false;
+  }
+  
+  onSubmit() {
+    this.spinner.show();
+
+    setTimeout(() => {
+      if (
+        !this.newStudent.firstname ||
+        !this.newStudent.lastname ||
+        !this.newStudent.email
+      ) {
+        alert('Please fill in all required fields!');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.newStudent.email)) {
+        alert('Please enter a valid email address!');
+        return;
+      }
+
+      const newStudentWithId = { ...this.newStudent, id: Date.now() };
+      this.listStudent = [...this.listStudent, newStudentWithId];
+      this.dataSource.data = this.listStudent;
+
+      localStorage.setItem('listStudent', JSON.stringify(this.listStudent));
+
+      this.newStudent = {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        birthday: '',
+      };
+      this.showForm = false;
+      this.spinner.hide();
+    }, 500);
   }
 
-  onSubmit() {
-    // Vérifier que tous les champs obligatoires sont remplis
-    if (!this.newStudent.firstname || !this.newStudent.lastname || !this.newStudent.email) {
-      alert('Please fill in all required fields!');
-      return;
+  // Ferme le formulaire si un clic est détecté à l'extérieur
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.showForm && this.formContainer && !this.formContainer.nativeElement.contains(event.target)) {
+      this.showForm = false;
     }
-  
-    // Ajouter un étudiant avec un ID unique
-    const newStudentWithId = { ...this.newStudent, id: Date.now() };
-    this.listStudent = [...this.listStudent, newStudentWithId]; // Créer une nouvelle référence du tableau
-  
-    // Sauvegarder la liste mise à jour dans le localStorage
-    localStorage.setItem('listStudent', JSON.stringify(this.listStudent));
-  
-    // Réinitialiser le formulaire
-    this.newStudent = { firstname: '', lastname: '', email: '', password: '', birthday: '' };
-    this.showForm = false; // Fermer le formulaire après soumission
   }
-}  
+}

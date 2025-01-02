@@ -12,8 +12,8 @@
   <br /><br />
 
   <!-- Formulaire de demande de salle -->
-  <div *ngIf="showForm" class="modal">
-    <div class="card">
+  <div *ngIf="showForm" class="modal" (click)="closeFormOnOutsideClick($event)">
+    <div class="card" (click)="$event.stopPropagation()">
       <div class="card-body">
         <h5 class="card-title">Request a Classroom</h5>
         <form (ngSubmit)="onSubmitRequest()">
@@ -168,20 +168,22 @@
               </span>
             </td>
             <td>
-              <button
-                *ngIf="request.requestStatus === 'In Progress'"
-                (click)="changeRequestStatus(request, 'Accepted')"
-                class="btn btn-success"
-              >
-                Accept
-              </button>
-              <button
-                *ngIf="request.requestStatus === 'In Progress'"
-                (click)="changeRequestStatus(request, 'Rejected')"
-                class="btn btn-danger"
-              >
-                Reject
-              </button>
+              <div class="buttons">
+                <button
+                  *ngIf="request.requestStatus === 'In Progress'"
+                  (click)="changeRequestStatus(request, 'Accepted')"
+                  class="btn btn-success"
+                >
+                  Accept
+                </button>
+                <button
+                  *ngIf="request.requestStatus === 'In Progress'"
+                  (click)="changeRequestStatus(request, 'Rejected')"
+                  class="btn btn-danger"
+                >
+                  Reject
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>

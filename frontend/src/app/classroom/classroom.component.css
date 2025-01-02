@@ -79,14 +79,21 @@ body {
   
   /* Primary Button */
   .btn-primary {
-    background-color: #e1d8f1;
-    color: #673ab7;
+    &:disabled {
+      background-color: #cccccc !important;
+      border-color: #bbbbbb !important;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+   
+    &:enabled {
+     background-color: #e1D8F1;
+    color: #673AB7;
     border: none;
     transition: all 0.3s ease;
+    &:hover {
+      background-color: #d2b8e3;}
   }
-  
-  .btn-primary:hover {
-    background-color: #d2b8e3;
   }
   
   /* Add New Classroom Button */
@@ -118,11 +125,12 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile sous le tableau */
     border-radius: 8px; /* Ajoute des coins arrondis pour un effet plus doux */
     background-color: #fff; /* Assure que le fond du tableau est blanc pour que l'ombre ressorte */
+
   }
   
   table th, table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ddd;
   }
   
@@ -138,7 +146,6 @@ body {
   
   table tr:hover {
     background-color: #ddd;
-    cursor: pointer;
   }
   
   /* Responsive Design */

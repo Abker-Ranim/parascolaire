@@ -1,3 +1,11 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
 <div class="content">
   <div class="left-side">
     <div class="auth-bg">
@@ -42,8 +50,11 @@
 
       <!-- Partie Login -->
       <div class="login">
-        <form >
-          <label for="chk" aria-hidden="true">Login</label>
+        <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+          <label for="chk" aria-hidden="true"
+            >Welcome ! <br />
+            Let's get you started
+          </label>
 
           <div class="input-container">
             <input
@@ -53,7 +64,7 @@
               [(ngModel)]="loginObj.email"
               required
             />
-            <span class="icon"><i class="ti ti-mail-filled"></i></span>
+            <span class="icon"> <i class="fas fa-envelope"></i></span>
           </div>
 
           <div class="input-container">
@@ -64,12 +75,10 @@
               [(ngModel)]="loginObj.password"
               required
             />
-            <span class="icon"
-              ><i class="ti ti-lock-square-rounded-filled"></i
-            ></span>
+            <span class="icon"><i class="fas fa-lock"></i> </span>
           </div>
 
-          <button type="submit" (click)="onLogin()">Login</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>

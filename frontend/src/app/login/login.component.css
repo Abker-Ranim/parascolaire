@@ -1,6 +1,9 @@
 .content {
   display: flex;
 
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   #side-img {
     width: 100%; /* Ajuster la largeur de l'image */
     height: 80%; /* Hauteur proportionnelle */
@@ -38,24 +41,25 @@
   #chk {
     display: none;
   }
-  .login{
+  .login {
     position: relative;
     width: 100%;
     height: 100%;
   }
   label {
     color: #6d44b8;
-    font-size: 2.3em;
+    font-size: 1.3em;
     justify-content: center;
     display: flex;
-    margin: 50px;
+    margin: 40px;
     font-weight: bold;
-    cursor: pointer;
-    transition: 0.5s ease-in-out;
+    padding: 15px;
+
+    
   }
   input {
-    width: 60%;
-    height: 10px;
+    width: 100%;
+    height: 35px;
     background: #f3f2f3;
     justify-content: center;
     display: flex;
@@ -66,7 +70,7 @@
     border-radius: 5px;
   }
   button {
-    width: 60%;
+    width: 50%;
     height: 40px;
     margin: 10px auto;
     justify-content: center;
@@ -75,7 +79,7 @@
     background: #573b8a;
     font-size: 1em;
     font-weight: bold;
-    margin-top: 30px;
+    margin-top: 35px;
     outline: none;
     border: none;
     border-radius: 5px;
@@ -86,7 +90,6 @@
     background: #6d44b8;
   }
 
-  
   .input-container {
     position: relative;
     width: 65%;
@@ -96,21 +99,20 @@
   .input-container .icon {
     position: absolute;
     top: 50%;
-    right: 2px; /* Positionné à droite */
+    right: 10px;
     transform: translateY(-50%);
-    color: #573b8a;
-    font-size: 1.2em;
+
+    color: rgb(85, 85, 85); /* Ou une autre couleur */
+    font-size: 16px;
   }
 
   .input-container input {
-    width: 100%;
     padding: 12px;
     border: none;
     outline: none;
     border-radius: 5px;
-    background: #e5e5e5;
+    background: #f3f2f2;
   }
-  
 }
 .auth-bg {
   z-index: -1; /* Pour que l'effet reste en arrière-plan */
